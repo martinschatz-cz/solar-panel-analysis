@@ -1,6 +1,6 @@
 format: jb-book
 
-root: chapters/00_introduction
+root: chapters/00_introduction.md
 
 options:
   numbered: 3
@@ -8,26 +8,25 @@ options:
 parts:
 - caption: Introduction
   chapters:
-    - file: chapters/00_introduction
-    - file: chapters/01_dataset-overview
+    - file: chapters/01_dataset-overview.md
 - caption: Detect - YOLOv8
   chapters:
-    - file: chapters/Detect/00-YOLOv8_no_augment_qcheck-quality
-    - file: chapters/Detect/01-YOLOv8_no_augment_qcheck-objects
-    - file: chapters/Detect/02-YOLOv8_no_augment_qcheck-training
-    - file: chapters/Detect/03-YOLOv8_no_augment_qcheck-validation
+    - file: chapters/Detect/00-YOLOv8_no_augment_qcheck-quality.ipynb
+    - file: chapters/Detect/01-YOLOv8_no_augment_qcheck-objects.ipynb
+    - file: chapters/Detect/02-YOLOv8_no_augment_qcheck-training.ipynb
+    - file: chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.ipynb
 - caption: Analyze - Classic approach
   chapters:
-    - file: chapters/Classic/11-solar_panel_qcheck_br_morph-prep
-    - file: chapters/Classic/12-solar_panel_qcheck_br_morph-quality
-    - file: chapters/Classic/13-solar_panel_qcheck_br_morph-clustering
+    - file: chapters/Classic/11-solar_panel_qcheck_br_morph-prep.ipynb
+    - file: chapters/Classic/12-solar_panel_qcheck_br_morph-quality.ipynb
+    - file: chapters/Classic/13-solar_panel_qcheck_br_morph-clustering.ipynb
 - caption: Analyze - DL ResNet50
   chapters:
-    - file: chapters/DL/21-solar_panel_qcheck_DL-prep
-    - file: chapters/DL/22-solar_panel_qcheck_DL-quality
-    - file: chapters/DL/23-solar_panel_qcheck_DL-training
-    - file: chapters/DL/24-solar_panel_qcheck_DL-val
+    - file: chapters/DL/21-solar_panel_qcheck_DL-prep.ipynb
+    - file: chapters/DL/22-solar_panel_qcheck_DL-quality.ipynb
+    - file: chapters/DL/23-solar_panel_qcheck_DL-training.ipynb
+    - file: chapters/DL/24-solar_panel_qcheck_DL-val.ipynb
 - caption: Analyze - DL YOLO
   chapters:
-    - file: chapters/YOLO/31-solar_panel_qcheck_DL-yolo-train
-    - file: chapters/YOLO/32-solar_panel_qcheck_DL-yolo-val
+    - file: chapters/YOLO/31-solar_panel_qcheck_DL-yolo-train.ipynb
+    - file: chapters/YOLO/32-solar_panel_qcheck_DL-yolo-val.ipynb

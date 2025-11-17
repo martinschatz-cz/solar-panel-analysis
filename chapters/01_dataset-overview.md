@@ -2,9 +2,6 @@
 
 ## Introduction — solar panel imaging
 
-- Link: [https://www.kaggle.com/datasets/marcosgabriel/infrared-solar-modules/data](https://www.kaggle.com/datasets/marcosgabriel/infrared-solar-modules/data)
-- Licence: MIT
-
 Thermal and infra-red imaging are powerful, non-invasive tools for monitoring photovoltaic (PV) systems. Thermal (long-wave infrared) cameras measure surface temperature and reveal heat patterns such as hot-spots, diode failures, soiling and entire offline modules. Shorter-wavelength infrared cameras (near-/mid-IR) can also be useful for contrast enhancement and some defect types.
 
 Why this matters:
@@ -22,9 +19,8 @@ Common uses for these datasets:
 
 ## Dataset A — Thermal PV Panel Detection and Fault Detection (Zenodo)
 
-- Link: [https://zenodo.org/records/16420123](https://zenodo.org/records/16420123)
-- Licence: CC-BY-4.0
-- DOI: [https://doi.org/10.5281/zenodo.16420123](https://doi.org/10.5281/zenodo.16420123)
+- Link: https://zenodo.org/records/16420123
+- DOI: https://doi.org/10.5281/zenodo.16420123
 - Citation: Christakakis, P., Pechlivani, E.-M., & Dimou, P. (2025). Thermal PV Panel Detection and Fault Detection Dataset for UAV-Based Inspection [Data set]. Zenodo.
 
 [![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.16420123.svg)](https://zenodo.org/record/16420123)
