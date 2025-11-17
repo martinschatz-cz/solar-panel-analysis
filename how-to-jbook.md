@@ -15,7 +15,7 @@ This document explains a step-by-step procedure to build the repository's Jupyte
 Create `environment.yml` at the repository root. Example content:
 
 ```yaml
-name: jbook
+name: jbook-solarp
 channels:
 	- conda-forge
 dependencies:
