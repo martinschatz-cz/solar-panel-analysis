@@ -1,0 +1,1737 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>YOLOv8 Validation &#8212; Solar Panel Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/justify.css?v=564be945" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Detect/03-YOLOv8_no_augment_qcheck-validation';</script>
+    <script src="../../_static/analytics.js?v=a5ca5447"></script>
+    <script src="../../_static/analytics_gtag.js?v=9197bb07"></script>
+    <link rel="canonical" href="https://martinschatz-cz.github.io/solar-panel-analysis/chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Quality Check" href="../Classic/11-solar_panel_qcheck_br_morph-prep.html" />
+    <link rel="prev" title="YOLOv8 Training" href="02-YOLOv8_no_augment_qcheck-training.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../00_introduction.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Solar Panel Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_introduction.html">
+                    📸 Quantitative Image Analysis: An Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01_dataset-overview.html">Datasets overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Detect - YOLOv8</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="00-YOLOv8_no_augment_qcheck-quality.html">Dataset Quality Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="01-YOLOv8_no_augment_qcheck-objects.html">Object Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02-YOLOv8_no_augment_qcheck-training.html">YOLOv8 Training</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">YOLOv8 Validation</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - Classic approach</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Classic/11-solar_panel_qcheck_br_morph-prep.html">Quality Check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Classic/12-solar_panel_qcheck_br_morph-quality.html">Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Classic/13-solar_panel_qcheck_br_morph-clustering.html">Clustering and Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL ResNet50</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../DL/21-solar_panel_qcheck_DL-prep.html">Prepare Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DL/22-solar_panel_qcheck_DL-quality.html">Quality Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DL/23-solar_panel_qcheck_DL-training.html">DL Training</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="../DL/24-solar_panel_qcheck_DL-val.html">DL Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL YOLO</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../YOLO/31-solar_panel_qcheck_DL-yolo-train.html">Data Preparation and YOLOv8 Trainig</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../YOLO/32-solar_panel_qcheck_DL-yolo-val.html">YOLOv8 Validation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/martinschatz-cz/solar-panel-analysis/main?urlpath=tree/chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/martinschatz-cz/solar-panel-analysis/blob/main/chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis/edit/main/chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>YOLOv8 Validation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">YOLOv8 Validation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-the-trained-yolov8">Apply the trained YOLOv8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-trained-model">Load the trained model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtask">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-input-and-output-paths">Define input and output paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-analysis-key-findings">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-or-next-steps">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#check-detections">Check detections</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-label-directories">Define label directories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-findings">Summarize findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analyze-the-overlap-between-predicted-and-ground-truth">Analyze the overlap between predicted and ground truth</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-label-and-image-directories">Define label and image directories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-results">Summarize results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p>Christakakis, P., Pechlivani, E.-M., &amp; Dimou, P. (2025). Thermal PV Panel Detection and Fault Detection Dataset for UAV-Based Inspection [Data set]. Zenodo. https://doi.org/10.5281/zenodo.16420123
+(CC-BY)</p>
+<section class="tex2jax_ignore mathjax_ignore" id="yolov8-validation">
+<h1>YOLOv8 Validation<a class="headerlink" href="#yolov8-validation" title="Link to this heading">#</a></h1>
+<p>Download and prepare data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace with the actual Zenodo URL</span>
+<span class="o">!</span>wget<span class="w"> </span>-O<span class="w"> </span>data.zip<span class="w"> </span><span class="s2">&quot;https://zenodo.org/records/16420123/files/Thermal%20PV%20Panel%20Detection%20Dataset%20for%20UAV%20Inspection.zip?download=1&quot;</span>
+<span class="o">!</span>unzip<span class="w"> </span>data.zip
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">data_source_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/data_source&#39;</span>
+
+<span class="c1"># List all files in the directory</span>
+<span class="n">all_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_source_dir</span><span class="p">)</span>
+
+<span class="c1"># Separate image and text files</span>
+<span class="n">txt_files</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_files</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">)}</span>
+<span class="n">image_extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;.jpeg&#39;</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">]</span>
+<span class="n">image_files</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">all_files</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span> <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">image_extensions</span><span class="p">)}</span>
+
+<span class="c1"># Get the base names without extensions for comparison</span>
+<span class="n">txt_basenames</span> <span class="o">=</span> <span class="p">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">txt_files</span><span class="p">}</span>
+<span class="n">image_basenames</span> <span class="o">=</span> <span class="p">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">image_files</span><span class="p">}</span>
+
+<span class="c1"># Find image basenames that do not have a corresponding text basename</span>
+<span class="n">extra_image_basenames</span> <span class="o">=</span> <span class="n">image_basenames</span> <span class="o">-</span> <span class="n">txt_basenames</span>
+
+<span class="c1"># Find the full filenames of the extra image files</span>
+<span class="n">extra_image_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">image_files</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">extra_image_basenames</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image files without a corresponding .txt file:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">extra_image</span> <span class="ow">in</span> <span class="n">extra_image_files</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">extra_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Image files without a corresponding .txt file:
+DJI_20230213170209_0001_T_JPG.rf.95b9dbd9c1b1989c443bc23d004cb355.jpg
+DJI_20230213170213_0003_T_JPG.rf.18f02dbe2b7e0d7981d3578a9243d566.jpg
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+
+<span class="n">data_source_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/data_source&#39;</span>
+<span class="n">destination_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/&#39;</span>
+
+<span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">extra_image_files</span><span class="p">:</span>
+    <span class="n">source_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_source_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+    <span class="n">destination_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">source_file_path</span><span class="p">,</span> <span class="n">destination_file_path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moved </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">destination_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2"> not found in </span><span class="si">{</span><span class="n">data_source_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error moving </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moved DJI_20230213170209_0001_T_JPG.rf.95b9dbd9c1b1989c443bc23d004cb355.jpg to /content/
+Moved DJI_20230213170213_0003_T_JPG.rf.18f02dbe2b7e0d7981d3578a9243d566.jpg to /content/
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="apply-the-trained-yolov8">
+<h1>Apply the trained YOLOv8<a class="headerlink" href="#apply-the-trained-yolov8" title="Link to this heading">#</a></h1>
+<p>Apply the trained YOLOv8 model on the validation images, save the predicted labels and output images with bounding boxes, measure the inference time for each image, and report the average inference time per image.</p>
+<section id="load-the-trained-model">
+<h2>Load the trained model<a class="headerlink" href="#load-the-trained-model" title="Link to this heading">#</a></h2>
+<section id="subtask">
+<h3>Subtask:<a class="headerlink" href="#subtask" title="Link to this heading">#</a></h3>
+<p>Load the best-trained model weights.</p>
+<p><strong>Reasoning</strong>:
+Load the best-trained model weights using the YOLO class from ultralytics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ultralytics</span><span class="w"> </span><span class="kn">import</span> <span class="n">YOLO</span>
+
+<span class="c1"># Load the best-trained model weights</span>
+<span class="n">best_model_path</span> <span class="o">=</span> <span class="s1">&#39;/content/runs/detect/train2/weights/best.pt&#39;</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">YOLO</span><span class="p">(</span><span class="n">best_model_path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded best-trained model from: </span><span class="si">{</span><span class="n">best_model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loaded best-trained model from: /content/runs/detect/train2/weights/best.pt
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="define-input-and-output-paths">
+<h2>Define input and output paths<a class="headerlink" href="#define-input-and-output-paths" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Subtask:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Specify the directory containing the validation images and the directory where the output should be saved.</p>
+<p><strong>Reasoning</strong>:
+Define the directories for validation images and output, and print them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Define the directory containing the validation images</span>
+<span class="n">yolov8_dataset_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_dataset&#39;</span>
+<span class="n">val_image_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">yolov8_dataset_dir</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">)</span>
+
+<span class="c1"># Define the directory where the output should be saved</span>
+<span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_inference_output&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Print the defined directories</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation image directory: </span><span class="si">{</span><span class="n">val_image_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output directory: </span><span class="si">{</span><span class="n">output_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Validation image directory: /content/yolov8_dataset/val/images
+Output directory: /content/yolov8_inference_output
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Run inference on the validation images using the trained model, save the predicted labels and output images with bounding boxes, and measure the inference time for each image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+
+<span class="c1"># Get a list of all image files in the validation directory</span>
+<span class="n">val_image_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val_image_dir</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span>
+
+<span class="n">inference_times</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Iterate through each validation image</span>
+<span class="k">for</span> <span class="n">image_path</span> <span class="ow">in</span> <span class="n">val_image_paths</span><span class="p">:</span>
+    <span class="c1"># Measure inference time</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_txt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Store the inference time</span>
+    <span class="n">inference_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inference complete for all validation images.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+1 label saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+2 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+3 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+4 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+5 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+6 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+7 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+8 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+9 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+10 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+11 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+12 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+13 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+14 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+15 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+16 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+17 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+18 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+19 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+20 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+21 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+22 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+23 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+24 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+25 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+26 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+27 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+28 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+29 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+30 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+31 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+32 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+33 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+34 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+35 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+36 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+37 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+38 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+39 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+40 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+41 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+42 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+43 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+44 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+45 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+46 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+47 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+48 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+49 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+50 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+51 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+52 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+53 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+54 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+55 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+56 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+57 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+58 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+59 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+60 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+61 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+62 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+63 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+64 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+65 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+66 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+67 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+68 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+69 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+70 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+71 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+72 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+73 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+74 labels saved to /content/yolov8_inference_output/predict/labels
+Results saved to <span class=" -Color -Color-Bold">/content/yolov8_inference_output/predict</span>
+75 labels saved to /content/yolov8_inference_output/predict/labels
+Inference complete for all validation images.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Calculate and print the average inference time per image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Calculate the average inference time</span>
+<span class="n">average_inference_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inference_times</span><span class="p">)</span>
+
+<span class="c1"># Print the average inference time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average inference time per image: </span><span class="si">{</span><span class="n">average_inference_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average inference time per image: 0.0941 seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>Summary:<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<section id="data-analysis-key-findings">
+<h3>Data Analysis Key Findings<a class="headerlink" href="#data-analysis-key-findings" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The best-trained YOLOv8 model was successfully loaded from <code class="docutils literal notranslate"><span class="pre">/content/runs/detect/train2/weights/best.pt</span></code>.</p></li>
+<li><p>Validation images were processed from <code class="docutils literal notranslate"><span class="pre">/content/yolov8_dataset/val/images</span></code>.</p></li>
+<li><p>Predicted labels and output images with bounding boxes were saved to <code class="docutils literal notranslate"><span class="pre">/content/yolov8_inference_output/predict</span></code>.</p></li>
+<li><p>The average inference time per image on the validation set was approximately 0.0941 seconds.</p></li>
+</ul>
+</section>
+<section id="insights-or-next-steps">
+<h3>Insights or Next Steps<a class="headerlink" href="#insights-or-next-steps" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The average inference time provides a baseline for the model’s performance speed on this hardware. Consider optimizing the model or using hardware acceleration for faster inference if needed for real-time applications.</p></li>
+<li><p>Review the saved output images and predicted labels in <code class="docutils literal notranslate"><span class="pre">/content/yolov8_inference_output/predict</span></code> to visually assess the model’s performance and identify areas for potential improvement in training or data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>zip<span class="w"> </span>-r<span class="w"> </span>/content/train2_output.zip<span class="w"> </span>/content/runs/detect/train2
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  adding: content/runs/detect/train2/ (stored 0%)
+  adding: content/runs/detect/train2/results.png (deflated 9%)
+  adding: content/runs/detect/train2/BoxF1_curve.png (deflated 18%)
+  adding: content/runs/detect/train2/val_batch2_pred.jpg (deflated 4%)
+  adding: content/runs/detect/train2/weights/ (stored 0%)
+  adding: content/runs/detect/train2/weights/best.pt (deflated 10%)
+  adding: content/runs/detect/train2/weights/last.pt (deflated 10%)
+  adding: content/runs/detect/train2/labels.jpg (deflated 29%)
+  adding: content/runs/detect/train2/confusion_matrix.png (deflated 36%)
+  adding: content/runs/detect/train2/train_batch5390.jpg (deflated 5%)
+  adding: content/runs/detect/train2/results.csv (deflated 67%)
+  adding: content/runs/detect/train2/BoxP_curve.png (deflated 26%)
+  adding: content/runs/detect/train2/BoxR_curve.png (deflated 18%)
+  adding: content/runs/detect/train2/val_batch1_labels.jpg (deflated 3%)
+  adding: content/runs/detect/train2/train_batch5391.jpg (deflated 5%)
+  adding: content/runs/detect/train2/confusion_matrix_normalized.png (deflated 36%)
+  adding: content/runs/detect/train2/train_batch5392.jpg (deflated 5%)
+  adding: content/runs/detect/train2/args.yaml (deflated 53%)
+  adding: content/runs/detect/train2/train_batch1.jpg (deflated 2%)
+  adding: content/runs/detect/train2/val_batch0_labels.jpg (deflated 3%)
+  adding: content/runs/detect/train2/BoxPR_curve.png (deflated 25%)
+  adding: content/runs/detect/train2/train_batch0.jpg (deflated 2%)
+  adding: content/runs/detect/train2/val_batch0_pred.jpg (deflated 2%)
+  adding: content/runs/detect/train2/val_batch1_pred.jpg (deflated 2%)
+  adding: content/runs/detect/train2/val_batch2_labels.jpg (deflated 5%)
+  adding: content/runs/detect/train2/train_batch2.jpg (deflated 2%)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="check-detections">
+<h1>Check detections<a class="headerlink" href="#check-detections" title="Link to this heading">#</a></h1>
+<p>Compare the number of predicted objects to the number of objects in the validation labels for each image.</p>
+<p><img alt="train_batch5390.jpg" src="../../_images/train_batch5390.jpg" /></p>
+<p><img alt="train_batch5392.jpg" src="../../_images/train_batch5392.jpg" /></p>
+<section id="define-label-directories">
+<h2>Define label directories<a class="headerlink" href="#define-label-directories" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>Subtask:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Specify the directories containing the predicted labels and the ground truth validation labels.</p>
+<p><strong>Reasoning</strong>:
+Define the directories for predicted labels and ground truth labels and print them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Define the directory containing the predicted labels</span>
+<span class="n">predicted_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_inference_output/predict/labels&#39;</span>
+
+<span class="c1"># Define the directory containing the ground truth validation labels</span>
+<span class="n">ground_truth_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_dataset/val/labels&#39;</span>
+
+<span class="c1"># Print the paths of both directories</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted labels directory: </span><span class="si">{</span><span class="n">predicted_labels_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ground truth labels directory: </span><span class="si">{</span><span class="n">ground_truth_labels_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted labels directory: /content/yolov8_inference_output/predict/labels
+Ground truth labels directory: /content/yolov8_dataset/val/labels
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Compare the number of predicted objects to the number of objects in the validation labels for each image and provide a summary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+
+<span class="c1"># Get list of predicted label files</span>
+<span class="n">predicted_label_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">predicted_labels_dir</span><span class="p">,</span> <span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
+
+<span class="c1"># Get list of ground truth label files</span>
+<span class="n">ground_truth_label_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ground_truth_labels_dir</span><span class="p">,</span> <span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
+
+<span class="c1"># Create dictionaries to store object counts for each image</span>
+<span class="n">predicted_object_counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">ground_truth_object_counts</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Function to count objects in a label file</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">count_objects_in_label_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Handle cases where a file might not exist</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+<span class="c1"># Populate predicted object counts</span>
+<span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">predicted_label_files</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">predicted_object_counts</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_objects_in_label_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+<span class="c1"># Populate ground truth object counts</span>
+<span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">ground_truth_label_files</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="n">ground_truth_object_counts</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_objects_in_label_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+<span class="c1"># Compare counts and summarize</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Comparison of Predicted vs. Ground Truth Object Counts:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">ground_truth_object_counts</span><span class="p">:</span>
+    <span class="n">predicted_count</span> <span class="o">=</span> <span class="n">predicted_object_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">ground_truth_count</span> <span class="o">=</span> <span class="n">ground_truth_object_counts</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">: Predicted = </span><span class="si">{</span><span class="n">predicted_count</span><span class="si">}</span><span class="s2">, Ground Truth = </span><span class="si">{</span><span class="n">ground_truth_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Provide overall summary statistics</span>
+<span class="n">all_predicted_counts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">predicted_object_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">all_ground_truth_counts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ground_truth_object_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">all_ground_truth_counts</span><span class="p">:</span>
+    <span class="n">total_ground_truth_objects</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">all_ground_truth_counts</span><span class="p">)</span>
+    <span class="n">total_predicted_objects</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">all_predicted_counts</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Overall Summary:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total Ground Truth Objects: </span><span class="si">{</span><span class="n">total_ground_truth_objects</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total Predicted Objects: </span><span class="si">{</span><span class="n">total_predicted_objects</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Calculate average counts</span>
+    <span class="n">average_ground_truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_ground_truth_counts</span><span class="p">)</span> <span class="k">if</span> <span class="n">all_ground_truth_counts</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">average_predicted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_predicted_counts</span><span class="p">)</span> <span class="k">if</span> <span class="n">all_predicted_counts</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Average Ground Truth Objects per Image: </span><span class="si">{</span><span class="n">average_ground_truth</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Average Predicted Objects per Image: </span><span class="si">{</span><span class="n">average_predicted</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">No ground truth label files found to compare.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparison of Predicted vs. Ground Truth Object Counts:
+  DJI_20230213160639_0152_T_JPG.rf.caf5a78dc86bf25c69aa78a5d0849e58.txt: Predicted = 87, Ground Truth = 84
+  DJI_20230213155927_0030_T_JPG.rf.7f06dfac5c3883a89f92c4a3ddc0ab80.txt: Predicted = 34, Ground Truth = 33
+  DJI_20230213160620_0147_T_JPG.rf.37ffe9b1db315b757a2773c2afe71023.txt: Predicted = 82, Ground Truth = 81
+  DJI_20230213162046_0375_T_JPG.rf.8ff2eeb1ae30a63f646e42dfbb2d8a1f.txt: Predicted = 300, Ground Truth = 370
+  DJI_20230213165141_0160_T_JPG.rf.1f7082325e63b6521337043421f5760b.txt: Predicted = 16, Ground Truth = 16
+  DJI_20230213152949_0010_T_JPG.rf.e8aba6e1f6f2841b6505285bbb807d2a.txt: Predicted = 206, Ground Truth = 203
+  DJI_20230213163948_0062_T_JPG.rf.e4c2636823de993eef03c321eb4edf4f.txt: Predicted = 26, Ground Truth = 26
+  DJI_20230213162014_0364_T_JPG.rf.e1cdb73e36e800d90703d44311b9d2f0.txt: Predicted = 300, Ground Truth = 375
+  DJI_20230213164727_0108_T_JPG.rf.c7b005811747eb0ed517739a0f174d21.txt: Predicted = 49, Ground Truth = 45
+  DJI_20230213154730_0155_T_JPG.rf.7331271b7dd487832f4d8bde49c1dfd6.txt: Predicted = 300, Ground Truth = 584
+  DJI_20230213160903_0194_T_JPG.rf.5a8529eb004c251574c4d9e38ded7f5f.txt: Predicted = 63, Ground Truth = 63
+  DJI_20230213153640_0035_T_JPG.rf.c10c7636bd67c369771eb98d8f0b6d83.txt: Predicted = 88, Ground Truth = 88
+  DJI_20230213160942_0206_T_JPG.rf.9cdc6f4b5a221e88ab594c780b662212.txt: Predicted = 56, Ground Truth = 56
+  DJI_20230213160447_0121_T_JPG.rf.b23c357520e74c61767febd823a3faa4.txt: Predicted = 53, Ground Truth = 53
+  DJI_20230213160251_0088_T_JPG.rf.42945cf2f03936b022157614776a2d03.txt: Predicted = 81, Ground Truth = 79
+  DJI_20230213164125_0071_T_JPG.rf.ba9ff5d96f1dbc7ae6eb2ac44c59ddd8.txt: Predicted = 41, Ground Truth = 42
+  DJI_20230213153805_0053_T_JPG.rf.d1f85a91b696b84da1c970f976e2cef1.txt: Predicted = 112, Ground Truth = 111
+  DJI_20230213164710_0105_T_JPG.rf.ff991f549ecdc6066739ca6d00ef2746.txt: Predicted = 51, Ground Truth = 51
+  DJI_20230213163818_0054_T_JPG.rf.bb8fd5045db272340cc25a8ef75afa6d.txt: Predicted = 20, Ground Truth = 17
+  DJI_20230213160157_0073_T_JPG.rf.ede0913ed41f41c952b74c7c3c082081.txt: Predicted = 79, Ground Truth = 77
+  DJI_20230213153029_0017_T_JPG.rf.ae9f5b76cabe9153a068560a3a27f984.txt: Predicted = 299, Ground Truth = 289
+  DJI_20230213160906_0195_T_JPG.rf.102a7b7af548190752eee2548715cb71.txt: Predicted = 69, Ground Truth = 66
+  DJI_20230213163936_0061_T_JPG.rf.c84410a79225930c39f5437ee7295155.txt: Predicted = 27, Ground Truth = 27
+  DJI_20230213160714_0162_T_JPG.rf.854ec80895aecd9a2d93a8902eb603f6.txt: Predicted = 68, Ground Truth = 66
+  DJI_20230213161134_0241_T_JPG.rf.94d1d29cdd0a5ecc9048f47e6ef4b298.txt: Predicted = 70, Ground Truth = 69
+  DJI_20230213160110_0062_T_JPG.rf.d837b0415f02c96d3d9e254bcc8c34f8.txt: Predicted = 74, Ground Truth = 72
+  DJI_20230213160229_0082_T_JPG.rf.1afa9038220a3efe8e2bec5020262a41.txt: Predicted = 79, Ground Truth = 75
+  DJI_20230213155806_0007_T_JPG.rf.465f8b6852f3d87c63aae7500f397f6c.txt: Predicted = 69, Ground Truth = 68
+  DJI_20230213164426_0087_T_JPG.rf.c06c666dd4b52172d1a755ee796446b4.txt: Predicted = 300, Ground Truth = 331
+  DJI_20230213152931_0007_T_JPG.rf.a24c90d7d74eff19cfdd8c70d7f662c8.txt: Predicted = 198, Ground Truth = 191
+  DJI_20230213154410_0129_T_JPG.rf.a5aa62c608d3efe465e6d9a2142a2c63.txt: Predicted = 49, Ground Truth = 48
+  DJI_20230213165257_0173_T_JPG.rf.f1083c59b48d39f6783de867fd7c1ec0.txt: Predicted = 62, Ground Truth = 60
+  DJI_20230213161035_0222_T_JPG.rf.9950f9decaa1a91abb0f3cc6a951637e.txt: Predicted = 65, Ground Truth = 63
+  DJI_20230213154113_0095_T_JPG.rf.0912d83cce816b165043342ba1fba119.txt: Predicted = 114, Ground Truth = 114
+  DJI_20230213160759_0175_T_JPG.rf.47906ac90f474e4bd39a79c3a2ea5936.txt: Predicted = 67, Ground Truth = 63
+  DJI_20230213154250_0119_T_JPG.rf.ec363dbd75dd0f897f647c06d3e73925.txt: Predicted = 67, Ground Truth = 66
+  DJI_20230213154012_0082_T_JPG.rf.937518b6548fed388d9c7e9fb4ba5f90.txt: Predicted = 58, Ground Truth = 56
+  DJI_20230213160244_0086_T_JPG.rf.6532fd323ee6d8a55b30415b4ff24cd0.txt: Predicted = 84, Ground Truth = 84
+  DJI_20230213161124_0238_T_JPG.rf.9ba78a2333143d2707d6692f8e843e8b.txt: Predicted = 67, Ground Truth = 67
+  DJI_20230213160805_0177_T_JPG.rf.2c0628ad1d45c11fbe55e3dc95351a6a.txt: Predicted = 57, Ground Truth = 54
+  DJI_20230213164241_0075_T_JPG.rf.94d4e9fa6adeb899e4707c4e872cdba6.txt: Predicted = 132, Ground Truth = 117
+  DJI_20230213160824_0182_T_JPG.rf.13095e6972bacf5ddb1ef8f60b036668.txt: Predicted = 60, Ground Truth = 58
+  DJI_20230213160746_0171_T_JPG.rf.b4418af2339e5328fc7efa39a0820750.txt: Predicted = 69, Ground Truth = 67
+  DJI_20230213154042_0089_T_JPG.rf.800ec6d96f27c1dbeee862d29b65df95.txt: Predicted = 110, Ground Truth = 109
+  DJI_20230213160345_0104_T_JPG.rf.0dd53508d21a3975a512e91c160eef53.txt: Predicted = 83, Ground Truth = 80
+  DJI_20230213161112_0234_T_JPG.rf.266d5d39e7ce89026c732ed510e2deee.txt: Predicted = 69, Ground Truth = 67
+  DJI_20230213153002_0013_T_JPG.rf.06cd574a9cff56e3ce5ecb74f19eaf91.txt: Predicted = 254, Ground Truth = 246
+  DJI_20230213153039_0020_T_JPG.rf.59d6c29aaba02d18888373cb02b53952.txt: Predicted = 293, Ground Truth = 283
+  DJI_20230213164829_0120_T_JPG.rf.22fca6456048badbd79c15ed214745da.txt: Predicted = 54, Ground Truth = 54
+  DJI_20230213153628_0032_T_JPG.rf.a4925efbbcd92068c73d4d7e8a573f09.txt: Predicted = 77, Ground Truth = 77
+  DJI_20230213161817_0346_T_JPG.rf.a2f8befb6405ce9bd7e784b29ea88680.txt: Predicted = 22, Ground Truth = 22
+  DJI_20230213160414_0112_T_JPG.rf.b988018069423d909786e6232161efc5.txt: Predicted = 73, Ground Truth = 72
+  DJI_20230213154123_0098_T_JPG.rf.329d50174e818c121536510cad106727.txt: Predicted = 104, Ground Truth = 103
+  DJI_20230213163549_0033_T_JPG.rf.46b0a7cbb89d46d238bf682c343ea9e7.txt: Predicted = 48, Ground Truth = 49
+  DJI_20230213165005_0145_T_JPG.rf.5aed3539551a5ff5982b862868a3139c.txt: Predicted = 21, Ground Truth = 21
+  DJI_20230213161317_0270_T_JPG.rf.8c014a3c2af58b9d116681628ed2d39c.txt: Predicted = 63, Ground Truth = 63
+  DJI_20230213153908_0066_T_JPG.rf.79c26454c78a92089e0db966810411b8.txt: Predicted = 90, Ground Truth = 90
+  DJI_20230213155829_0014_T_JPG.rf.445443d0468511d0187d20c0630101b0.txt: Predicted = 61, Ground Truth = 58
+  DJI_20230213162023_0367_T_JPG.rf.a2a7c566b810375c10eb4bed3f776338.txt: Predicted = 300, Ground Truth = 363
+  DJI_20230213165201_0165_T_JPG.rf.167b0884335f665d24bbee73985f0b3a.txt: Predicted = 26, Ground Truth = 24
+  DJI_20230213154136_0101_T_JPG.rf.6018169742cf64359e81a2b6caa067e4.txt: Predicted = 83, Ground Truth = 82
+  DJI_20230213160919_0199_T_JPG.rf.d72ccb365bf4f35986e0efb6984cb314.txt: Predicted = 67, Ground Truth = 67
+  DJI_20230213164834_0121_T_JPG.rf.49b4c3ea247e46dec99d985030e19c3b.txt: Predicted = 17, Ground Truth = 17
+  DJI_20230213154509_0141_T_JPG.rf.91ad5509e5504baffc8a74185a153069.txt: Predicted = 45, Ground Truth = 47
+  DJI_20230213154432_0134_T_JPG.rf.26a7db672d144018f91101f9cbc00f49.txt: Predicted = 39, Ground Truth = 39
+  DJI_20230213164043_0066_T_JPG.rf.6e5a575f8ec1e2d3aa996b91d5aa80a7.txt: Predicted = 111, Ground Truth = 108
+  DJI_20230213155838_0017_T_JPG.rf.dd31cfdf6c2600d02840ea70156761f6.txt: Predicted = 58, Ground Truth = 58
+  DJI_20230213154215_0110_T_JPG.rf.77f009e4fd3e4025f39a16b19bdf9a45.txt: Predicted = 113, Ground Truth = 113
+  DJI_20230213153545_0028_T_JPG.rf.2e6811dc7efbb66d491177c8ef91ab9e.txt: Predicted = 14, Ground Truth = 12
+  DJI_20230213154415_0130_T_JPG.rf.6719ca4c1ab5d3c4d383fa068f406aca.txt: Predicted = 45, Ground Truth = 44
+  DJI_20230213160909_0196_T_JPG.rf.b24bd2a24e2bb624f3ccb91e05e34e60.txt: Predicted = 65, Ground Truth = 65
+  DJI_20230213165240_0170_T_JPG.rf.ebecb61b7be254c60fe8e442f0386b47.txt: Predicted = 57, Ground Truth = 55
+  DJI_20230213164903_0128_T_JPG.rf.156dc15d840cd9f4e5b7da8023544235.txt: Predicted = 21, Ground Truth = 21
+  DJI_20230213154654_0154_T_JPG.rf.cf8bf33b7ccf4096db2b2d6962b5d16b.txt: Predicted = 159, Ground Truth = 159
+  DJI_20230213161541_0306_T_JPG.rf.4eb0b6d0d27d125cde09297dba207593.txt: Predicted = 38, Ground Truth = 37
+
+Overall Summary:
+  Total Ground Truth Objects: 7330
+  Total Predicted Objects: 6928
+  Average Ground Truth Objects per Image: 97.73
+  Average Predicted Objects per Image: 92.37
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summarize-findings">
+<h2>Summarize findings<a class="headerlink" href="#summarize-findings" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Subtask:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Summarize the comparison across all validation images.</p>
+<p><strong>Reasoning</strong>:
+Summarize the comparison across all validation images based on the previously calculated total and average counts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Summarize the comparison based on the printed output from the previous step</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Summary of Comparison between Predicted and Ground Truth Object Counts:&quot;</span><span class="p">)</span>
+
+<span class="c1"># Access the calculated total and average counts from the previous step</span>
+<span class="c1"># Assuming the variables total_ground_truth_objects, total_predicted_objects,</span>
+<span class="c1"># average_ground_truth, and average_predicted are available from the previous step.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Total Ground Truth Objects across all validation images: </span><span class="si">{</span><span class="n">total_ground_truth_objects</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total Predicted Objects across all validation images: </span><span class="si">{</span><span class="n">total_predicted_objects</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Average Ground Truth Objects per Image: </span><span class="si">{</span><span class="n">average_ground_truth</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average Predicted Objects per Image: </span><span class="si">{</span><span class="n">average_predicted</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyze the general agreement or disagreement</span>
+<span class="n">difference_in_totals</span> <span class="o">=</span> <span class="n">total_ground_truth_objects</span> <span class="o">-</span> <span class="n">total_predicted_objects</span>
+<span class="n">difference_in_averages</span> <span class="o">=</span> <span class="n">average_ground_truth</span> <span class="o">-</span> <span class="n">average_predicted</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Difference in total objects (Ground Truth - Predicted): </span><span class="si">{</span><span class="n">difference_in_totals</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Difference in average objects per image (Ground Truth - Predicted): </span><span class="si">{</span><span class="n">difference_in_averages</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">difference_in_totals</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">total_ground_truth_objects</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">:</span> <span class="c1"># Arbitrary threshold for &#39;general agreement&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">General agreement: The total predicted object count is relatively close to the total ground truth object count.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">General disagreement: There is a notable difference between the total predicted object count and the total ground truth object count.&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Note any significant discrepancies based on the per-image comparison output from the previous step</span>
+<span class="c1"># This part is based on observation of the previous output which showed some predicted counts capped at 300.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Observations on per-image discrepancies:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - In several images with high object counts, the predicted count appears to be capped at 300.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - This suggests that the model or the inference process might have a limit on the maximum number of detections per image.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - For images with lower object counts, the predicted counts generally align well with the ground truth counts.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Summary of Comparison between Predicted and Ground Truth Object Counts:
+
+Total Ground Truth Objects across all validation images: 7330
+Total Predicted Objects across all validation images: 6928
+
+Average Ground Truth Objects per Image: 97.73
+Average Predicted Objects per Image: 92.37
+
+Difference in total objects (Ground Truth - Predicted): 402
+Difference in average objects per image (Ground Truth - Predicted): 5.36
+
+General agreement: The total predicted object count is relatively close to the total ground truth object count.
+
+Observations on per-image discrepancies:
+  - In several images with high object counts, the predicted count appears to be capped at 300.
+  - This suggests that the model or the inference process might have a limit on the maximum number of detections per image.
+  - For images with lower object counts, the predicted counts generally align well with the ground truth counts.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>Summary:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>Data Analysis Key Findings<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The total number of ground truth objects across all validation images is 7330, while the total number of predicted objects is 6928.</p></li>
+<li><p>The average number of ground truth objects per image is 97.73, compared to an average of 92.37 predicted objects per image.</p></li>
+<li><p>There is a difference of 402 fewer predicted objects in total compared to the ground truth, and an average difference of 5.36 fewer predicted objects per image.</p></li>
+<li><p>A notable discrepancy was observed in images with high object counts, where the predicted count appeared to be capped at 300.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Insights or Next Steps<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Investigate the cause of the predicted object count being capped at 300 in images with high object density, as this limits the model’s ability to detect all objects in crowded scenes.</p></li>
+<li><p>Analyze the performance metrics (like precision, recall, and F1-score) specifically for images with high object counts to understand the impact of the prediction limit on overall model performance.</p></li>
+</ul>
+<p><img alt="val_batch1_pred.jpg" src="chapters/Detect/attachment:0f766fe5-3d1d-4136-9303-e4c5a1a82330.jpg" /></p>
+<p><img alt="val_batch2_pred.jpg" src="chapters/Detect/attachment:bf3b67a2-216e-4c06-8413-11342e2cba72.jpg" /></p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="analyze-the-overlap-between-predicted-and-ground-truth">
+<h1>Analyze the overlap between predicted and ground truth<a class="headerlink" href="#analyze-the-overlap-between-predicted-and-ground-truth" title="Link to this heading">#</a></h1>
+<p>Analyze the overlap between predicted and ground truth bounding boxes for the validation dataset, counting the number of predicted objects with an IOU of at least 50% with any ground truth object.</p>
+<section id="define-label-and-image-directories">
+<h2>Define label and image directories<a class="headerlink" href="#define-label-and-image-directories" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h3>Subtask:<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>Specify the directories containing the predicted labels and the ground truth validation labels.</p>
+<p><strong>Reasoning</strong>:
+Define the directories for predicted labels, ground truth labels, and validation images, and print them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Define the directory containing the predicted labels</span>
+<span class="n">predicted_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_inference_output/predict/labels&#39;</span>
+
+<span class="c1"># Define the directory containing the ground truth validation labels</span>
+<span class="n">ground_truth_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_dataset/val/labels&#39;</span>
+
+<span class="c1"># Define the directory containing the validation images</span>
+<span class="n">yolov8_dataset_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_dataset&#39;</span>
+<span class="n">val_image_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">yolov8_dataset_dir</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Print the paths of the directories</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted labels directory: </span><span class="si">{</span><span class="n">predicted_labels_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ground truth labels directory: </span><span class="si">{</span><span class="n">ground_truth_labels_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation image directory: </span><span class="si">{</span><span class="n">val_image_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicted labels directory: /content/yolov8_inference_output/predict/labels
+Ground truth labels directory: /content/yolov8_dataset/val/labels
+Validation image directory: /content/yolov8_dataset/val/images
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Calculate the IOU between predicted and ground truth bounding boxes for each image and count the number of predicted objects with an IOU of at least 50% with any ground truth object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Function to calculate IoU of two bounding boxes [x_center, y_center, width, height]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_iou</span><span class="p">(</span><span class="n">box1</span><span class="p">,</span> <span class="n">box2</span><span class="p">):</span>
+    <span class="c1"># Convert to [x_min, y_min, x_max, y_max]</span>
+    <span class="n">box1_xmin</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_ymin</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_xmax</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_ymax</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">box1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">box2_xmin</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_ymin</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_xmax</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_ymax</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">box2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="c1"># Get the coordinates of the intersection rectangle</span>
+    <span class="n">inter_xmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">box1_xmin</span><span class="p">,</span> <span class="n">box2_xmin</span><span class="p">)</span>
+    <span class="n">inter_ymin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">box1_ymin</span><span class="p">,</span> <span class="n">box2_ymin</span><span class="p">)</span>
+    <span class="n">inter_xmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">box1_xmax</span><span class="p">,</span> <span class="n">box2_xmax</span><span class="p">)</span>
+    <span class="n">inter_ymax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">box1_ymax</span><span class="p">,</span> <span class="n">box2_ymax</span><span class="p">)</span>
+
+    <span class="c1"># Calculate intersection area</span>
+    <span class="n">inter_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inter_xmax</span> <span class="o">-</span> <span class="n">inter_xmin</span><span class="p">)</span>
+    <span class="n">inter_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inter_ymax</span> <span class="o">-</span> <span class="n">inter_ymin</span><span class="p">)</span>
+    <span class="n">intersection_area</span> <span class="o">=</span> <span class="n">inter_width</span> <span class="o">*</span> <span class="n">inter_height</span>
+
+    <span class="c1"># Calculate union area</span>
+    <span class="n">box1_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">box1_xmax</span> <span class="o">-</span> <span class="n">box1_xmin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box1_ymax</span> <span class="o">-</span> <span class="n">box1_ymin</span><span class="p">)</span>
+    <span class="n">box2_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">box2_xmax</span> <span class="o">-</span> <span class="n">box2_ymin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box2_ymax</span> <span class="o">-</span> <span class="n">box2_ymin</span><span class="p">)</span>
+    <span class="n">union_area</span> <span class="o">=</span> <span class="n">box1_area</span> <span class="o">+</span> <span class="n">box2_area</span> <span class="o">-</span> <span class="n">intersection_area</span>
+
+    <span class="c1"># Handle case where union area is zero</span>
+    <span class="k">if</span> <span class="n">union_area</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Calculate IoU</span>
+    <span class="n">iou</span> <span class="o">=</span> <span class="n">intersection_area</span> <span class="o">/</span> <span class="n">union_area</span>
+    <span class="k">return</span> <span class="n">iou</span>
+
+<span class="c1"># Get list of ground truth label files</span>
+<span class="n">ground_truth_label_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ground_truth_labels_dir</span><span class="p">,</span> <span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
+
+<span class="n">predicted_objects_with_iou_above_threshold</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">iou_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Iterate through each ground truth label file</span>
+<span class="k">for</span> <span class="n">gt_filepath</span> <span class="ow">in</span> <span class="n">ground_truth_label_files</span><span class="p">:</span>
+    <span class="n">gt_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">gt_filepath</span><span class="p">)</span>
+    <span class="n">predicted_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">predicted_labels_dir</span><span class="p">,</span> <span class="n">gt_filename</span><span class="p">)</span>
+
+    <span class="n">gt_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">predicted_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Read ground truth boxes</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">gt_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+                    <span class="c1"># Assuming format is class_id center_x center_y width height (normalized)</span>
+                    <span class="n">gt_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Ground truth file not found for </span><span class="si">{</span><span class="n">gt_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Read predicted boxes</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">predicted_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+                    <span class="c1"># Assuming format is class_id center_x center_y width height confidence (normalized)</span>
+                    <span class="n">predicted_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]])</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="c1"># This image might not have any predictions</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Compare predicted boxes with ground truth boxes</span>
+    <span class="k">for</span> <span class="n">p_box</span> <span class="ow">in</span> <span class="n">predicted_boxes</span><span class="p">:</span>
+        <span class="n">found_match</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">gt_box</span> <span class="ow">in</span> <span class="n">gt_boxes</span><span class="p">:</span>
+            <span class="n">iou</span> <span class="o">=</span> <span class="n">calculate_iou</span><span class="p">(</span><span class="n">p_box</span><span class="p">,</span> <span class="n">gt_box</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">iou</span> <span class="o">&gt;=</span> <span class="n">iou_threshold</span><span class="p">:</span>
+                <span class="n">predicted_objects_with_iou_above_threshold</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">found_match</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span> <span class="c1"># Move to the next predicted box once a match is found</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of predicted objects with IoU &gt;= </span><span class="si">{</span><span class="n">iou_threshold</span><span class="si">}</span><span class="s2"> with any ground truth object: </span><span class="si">{</span><span class="n">predicted_objects_with_iou_above_threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of predicted objects with IoU &gt;= 0.5 with any ground truth object: 1264
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="summarize-results">
+<h2>Summarize results<a class="headerlink" href="#summarize-results" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3>Subtask:<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>Report the total number of predicted objects with &gt;= 50% IOU overlap and potentially compare it to the total number of ground truth objects.</p>
+<p><strong>Reasoning</strong>:
+Access the required variables and print the total counts and their difference as instructed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access the total number of predicted objects with an IoU of at least 50%</span>
+<span class="n">predicted_objects_iou_50</span> <span class="o">=</span> <span class="n">predicted_objects_with_iou_above_threshold</span>
+
+<span class="c1"># Access the total number of ground truth objects</span>
+<span class="n">total_ground_truth</span> <span class="o">=</span> <span class="n">total_ground_truth_objects</span>
+
+<span class="c1"># Print the total number of predicted objects with &gt;= 50% IOU overlap</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total number of predicted objects with &gt;= 50% IOU overlap: </span><span class="si">{</span><span class="n">predicted_objects_iou_50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Print the total number of ground truth objects</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total number of ground truth objects: </span><span class="si">{</span><span class="n">total_ground_truth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate and print the difference</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="n">total_ground_truth</span> <span class="o">-</span> <span class="n">predicted_objects_iou_50</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Difference (Ground Truth - Predicted with &gt;= 50% IOU): </span><span class="si">{</span><span class="n">difference</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total number of predicted objects with &gt;= 50% IOU overlap: 1264
+Total number of ground truth objects: 7330
+Difference (Ground Truth - Predicted with &gt;= 50% IOU): 6066
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2>Summary:<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h3>Data Analysis Key Findings<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The total number of predicted objects with an IoU of at least 50% with any ground truth object was 1264.</p></li>
+<li><p>There was a total of 7330 ground truth objects in the validation dataset.</p></li>
+<li><p>The difference between the total ground truth objects and the predicted objects with an IoU of at least 50% was 6066.</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Insights or Next Steps<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The significant difference between the number of ground truth objects and predicted objects with a good IoU suggests that the model is missing a large number of objects or has poor localization accuracy for many predictions.</p></li>
+<li><p>Investigate the predictions with low IoU or the ground truth objects that were not matched to understand the specific failure modes of the model.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Define the directory containing the predicted labels</span>
+<span class="n">predicted_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_inference_output/predict/labels&#39;</span>
+
+<span class="c1"># Define the directory containing the ground truth validation labels</span>
+<span class="n">ground_truth_labels_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/yolov8_dataset/val/labels&#39;</span>
+
+
+<span class="c1"># Function to calculate IoU of two bounding boxes [x_center, y_center, width, height]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_iou</span><span class="p">(</span><span class="n">box1</span><span class="p">,</span> <span class="n">box2</span><span class="p">):</span>
+    <span class="c1"># Convert to [x_min, y_min, x_max, y_max]</span>
+    <span class="n">box1_xmin</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_ymin</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_xmax</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">box1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box1_ymax</span> <span class="o">=</span> <span class="n">box1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">box1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">box2_xmin</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_ymin</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_xmax</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">box2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">box2_ymax</span> <span class="o">=</span> <span class="n">box2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">box2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="c1"># Get the coordinates of the intersection rectangle</span>
+    <span class="n">inter_xmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">box1_xmin</span><span class="p">,</span> <span class="n">box2_xmin</span><span class="p">)</span>
+    <span class="n">inter_ymin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">box1_ymin</span><span class="p">,</span> <span class="n">box2_ymin</span><span class="p">)</span>
+    <span class="n">inter_xmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">box1_xmax</span><span class="p">,</span> <span class="n">box2_xmax</span><span class="p">)</span>
+    <span class="n">inter_ymax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">box1_ymax</span><span class="p">,</span> <span class="n">box2_ymax</span><span class="p">)</span>
+
+    <span class="c1"># Calculate intersection area</span>
+    <span class="n">inter_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inter_xmax</span> <span class="o">-</span> <span class="n">inter_xmin</span><span class="p">)</span>
+    <span class="n">inter_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inter_ymax</span> <span class="o">-</span> <span class="n">inter_ymin</span><span class="p">)</span>
+    <span class="n">intersection_area</span> <span class="o">=</span> <span class="n">inter_width</span> <span class="o">*</span> <span class="n">inter_height</span>
+
+    <span class="c1"># Calculate union area</span>
+    <span class="n">box1_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">box1_xmax</span> <span class="o">-</span> <span class="n">box1_xmin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box1_ymax</span> <span class="o">-</span> <span class="n">box1_ymin</span><span class="p">)</span>
+    <span class="n">box2_area</span> <span class="o">=</span> <span class="p">(</span><span class="n">box2_xmax</span> <span class="o">-</span> <span class="n">box2_ymin</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">box2_ymax</span> <span class="o">-</span> <span class="n">box2_ymin</span><span class="p">)</span>
+    <span class="n">union_area</span> <span class="o">=</span> <span class="n">box1_area</span> <span class="o">+</span> <span class="n">box2_area</span> <span class="o">-</span> <span class="n">intersection_area</span>
+
+    <span class="c1"># Handle case where union area is zero</span>
+    <span class="k">if</span> <span class="n">union_area</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+
+    <span class="c1"># Calculate IoU</span>
+    <span class="n">iou</span> <span class="o">=</span> <span class="n">intersection_area</span> <span class="o">/</span> <span class="n">union_area</span>
+    <span class="k">return</span> <span class="n">iou</span>
+
+<span class="c1"># Get list of ground truth label files</span>
+<span class="n">ground_truth_label_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ground_truth_labels_dir</span><span class="p">,</span> <span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
+
+<span class="n">predicted_objects_with_iou_above_threshold</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">iou_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Iterate through each ground truth label file</span>
+<span class="k">for</span> <span class="n">gt_filepath</span> <span class="ow">in</span> <span class="n">ground_truth_label_files</span><span class="p">:</span>
+    <span class="n">gt_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">gt_filepath</span><span class="p">)</span>
+    <span class="n">predicted_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">predicted_labels_dir</span><span class="p">,</span> <span class="n">gt_filename</span><span class="p">)</span>
+
+    <span class="n">gt_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">predicted_boxes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Read ground truth boxes</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">gt_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+                    <span class="c1"># Assuming format is class_id center_x center_y width height (normalized)</span>
+                    <span class="n">gt_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Ground truth file not found for </span><span class="si">{</span><span class="n">gt_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Read predicted boxes</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">predicted_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">parts</span><span class="p">:</span>
+                    <span class="c1"># Assuming format is class_id center_x center_y width height confidence (normalized)</span>
+                    <span class="n">predicted_boxes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]])</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="c1"># This image might not have any predictions</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Compare predicted boxes with ground truth boxes</span>
+    <span class="k">for</span> <span class="n">p_box</span> <span class="ow">in</span> <span class="n">predicted_boxes</span><span class="p">:</span>
+        <span class="n">found_match</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">gt_box</span> <span class="ow">in</span> <span class="n">gt_boxes</span><span class="p">:</span>
+            <span class="n">iou</span> <span class="o">=</span> <span class="n">calculate_iou</span><span class="p">(</span><span class="n">p_box</span><span class="p">,</span> <span class="n">gt_box</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">iou</span> <span class="o">&gt;=</span> <span class="n">iou_threshold</span><span class="p">:</span>
+                <span class="n">predicted_objects_with_iou_above_threshold</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">found_match</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span> <span class="c1"># Move to the next predicted box once a match is found</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of predicted objects with IoU &gt;= </span><span class="si">{</span><span class="n">iou_threshold</span><span class="si">}</span><span class="s2"> with any ground truth object: </span><span class="si">{</span><span class="n">predicted_objects_with_iou_above_threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of predicted objects with IoU &gt;= 0.5 with any ground truth object: 1264
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access the total number of predicted objects with an IoU of at least 50%</span>
+<span class="n">predicted_objects_iou_50</span> <span class="o">=</span> <span class="n">predicted_objects_with_iou_above_threshold</span>
+
+<span class="c1"># Access the total number of ground truth objects</span>
+<span class="n">total_ground_truth</span> <span class="o">=</span> <span class="n">total_ground_truth_objects</span>
+
+<span class="c1"># Print the total number of predicted objects with &gt;= 50% IOU overlap</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total number of predicted objects with &gt;= 50% IOU overlap: </span><span class="si">{</span><span class="n">predicted_objects_iou_50</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Print the total number of ground truth objects</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total number of ground truth objects: </span><span class="si">{</span><span class="n">total_ground_truth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate and print the difference</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="n">total_ground_truth</span> <span class="o">-</span> <span class="n">predicted_objects_iou_50</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Difference (Ground Truth - Predicted with &gt;= 50% IOU): </span><span class="si">{</span><span class="n">difference</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total number of predicted objects with &gt;= 50% IOU overlap: 1264
+Total number of ground truth objects: 7330
+Difference (Ground Truth - Predicted with &gt;= 50% IOU): 6066
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "martinschatz-cz/solar-panel-analysis",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/Detect"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02-YOLOv8_no_augment_qcheck-training.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">YOLOv8 Training</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Classic/11-solar_panel_qcheck_br_morph-prep.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quality Check</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">YOLOv8 Validation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-the-trained-yolov8">Apply the trained YOLOv8</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-trained-model">Load the trained model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtask">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-input-and-output-paths">Define input and output paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-analysis-key-findings">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-or-next-steps">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#check-detections">Check detections</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-label-directories">Define label directories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-findings">Summarize findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analyze-the-overlap-between-predicted-and-ground-truth">Analyze the overlap between predicted and ground truth</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-label-and-image-directories">Define label and image directories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-results">Summarize results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Schätz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Martin Schätz.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

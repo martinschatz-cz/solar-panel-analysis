@@ -1,0 +1,1809 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DL Training &#8212; Solar Panel Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/justify.css?v=564be945" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/DL/23-solar_panel_qcheck_DL-training';</script>
+    <script src="../../_static/analytics.js?v=a5ca5447"></script>
+    <script src="../../_static/analytics_gtag.js?v=9197bb07"></script>
+    <link rel="canonical" href="https://martinschatz-cz.github.io/solar-panel-analysis/chapters/DL/23-solar_panel_qcheck_DL-training.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DL Validation" href="24-solar_panel_qcheck_DL-val.html" />
+    <link rel="prev" title="Quality Analysis" href="22-solar_panel_qcheck_DL-quality.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../00_introduction.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Solar Panel Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_introduction.html">
+                    📸 Quantitative Image Analysis: An Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01_dataset-overview.html">Datasets overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Detect - YOLOv8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Detect/00-YOLOv8_no_augment_qcheck-quality.html">Dataset Quality Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Detect/01-YOLOv8_no_augment_qcheck-objects.html">Object Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Detect/02-YOLOv8_no_augment_qcheck-training.html">YOLOv8 Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Detect/03-YOLOv8_no_augment_qcheck-validation.html">YOLOv8 Validation</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - Classic approach</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Classic/11-solar_panel_qcheck_br_morph-prep.html">Quality Check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Classic/12-solar_panel_qcheck_br_morph-quality.html">Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Classic/13-solar_panel_qcheck_br_morph-clustering.html">Clustering and Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL ResNet50</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="21-solar_panel_qcheck_DL-prep.html">Prepare Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22-solar_panel_qcheck_DL-quality.html">Quality Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DL Training</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="24-solar_panel_qcheck_DL-val.html">DL Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL YOLO</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../YOLO/31-solar_panel_qcheck_DL-yolo-train.html">Data Preparation and YOLOv8 Trainig</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../YOLO/32-solar_panel_qcheck_DL-yolo-val.html">YOLOv8 Validation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/martinschatz-cz/solar-panel-analysis/main?urlpath=tree/chapters/DL/23-solar_panel_qcheck_DL-training.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/martinschatz-cz/solar-panel-analysis/blob/main/chapters/DL/23-solar_panel_qcheck_DL-training.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis/edit/main/chapters/DL/23-solar_panel_qcheck_DL-training.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/DL/23-solar_panel_qcheck_DL-training.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DL Training</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">DL Training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-valid-images-for-dl">Filter Valid Images for DL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtask">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encode-anomaly-labels">Encode Anomaly Labels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split-dataset-into-train-validation-and-test-sets">Split Dataset into Train, Validation, and Test Sets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propose-data-augmentation-techniques">Propose Data Augmentation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Subtask:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-data-augmentation-techniques-for-solar-panel-anomaly-detection">Potential Data Augmentation Techniques for Solar Panel Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Potential Data Augmentation Techniques for Solar Panel Anomaly Detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-the-data-preparation-steps-for-deep-learning">Summarize the data preparation steps for deep learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-a">Q&amp;A</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-analysis-key-findings">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-or-next-steps">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-model-architecture">Define Model Architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Subtask:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Task</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Define Model Architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data-loaders-with-augmentation">Prepare Data Loaders with Augmentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-loss-function-and-optimizer">Define Loss Function and Optimizer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-deep-learning-model">Train the Deep Learning Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Subtask:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dl-training">
+<h1>DL Training<a class="headerlink" href="#dl-training" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import zipfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip uninstall numpy -y</span>
+<span class="c1"># !pip install &#39;numpy &lt; 2&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Core Data and Image Processing Libraries</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pandas<span class="w"> </span>opencv-python<span class="w"> </span>matplotlib<span class="w"> </span>seaborn<span class="w"> </span>scikit-learn<span class="w"> </span>tqdm<span class="w"> </span>watermark<span class="w"> </span>Pillow
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Defaulting to user installation because normal site-packages is not writeable
+Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com
+Requirement already satisfied: pandas in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (2.2.3)
+Requirement already satisfied: opencv-python in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (4.10.0.82)
+Requirement already satisfied: matplotlib in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (3.10.0)
+Requirement already satisfied: seaborn in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (0.13.2)
+Requirement already satisfied: scikit-learn in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (1.5.0)
+Requirement already satisfied: tqdm in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (4.67.0)
+Requirement already satisfied: watermark in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (2.4.3)
+Requirement already satisfied: Pillow in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (10.3.0)
+Requirement already satisfied: numpy&gt;=1.22.4 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from pandas) (1.24.3)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /usr/local/lib/python3.10/dist-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.10/dist-packages (from pandas) (2024.1)
+Requirement already satisfied: tzdata&gt;=2022.7 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from pandas) (2025.1)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from matplotlib) (1.3.1)
+Requirement already satisfied: cycler&gt;=0.10 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from matplotlib) (4.56.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from matplotlib) (1.4.8)
+Requirement already satisfied: packaging&gt;=20.0 in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from matplotlib) (24.2)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib) (3.1.2)
+Requirement already satisfied: scipy&gt;=1.6.0 in /usr/local/lib/python3.10/dist-packages (from scikit-learn) (1.12.0)
+Requirement already satisfied: joblib&gt;=1.2.0 in /usr/local/lib/python3.10/dist-packages (from scikit-learn) (1.3.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.10/dist-packages (from scikit-learn) (3.3.0)
+Requirement already satisfied: ipython&gt;=6.0 in /usr/local/lib/python3.10/dist-packages (from watermark) (8.21.0)
+Requirement already satisfied: importlib-metadata&gt;=1.4 in /usr/local/lib/python3.10/dist-packages (from watermark) (7.0.2)
+Requirement already satisfied: setuptools in /auto/vestec1-elixir/home/schatzm/.local/lib/python3.10/site-packages (from watermark) (75.5.0)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.10/dist-packages (from importlib-metadata&gt;=1.4-&gt;watermark) (3.17.0)
+Requirement already satisfied: decorator in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (5.1.1)
+Requirement already satisfied: jedi&gt;=0.16 in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (0.19.1)
+Requirement already satisfied: matplotlib-inline in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (0.1.6)
+Requirement already satisfied: prompt-toolkit&lt;3.1.0,&gt;=3.0.41 in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (3.0.43)
+Requirement already satisfied: pygments&gt;=2.4.0 in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (2.17.2)
+Requirement already satisfied: stack-data in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (0.6.3)
+Requirement already satisfied: traitlets&gt;=5 in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (5.9.0)
+Requirement already satisfied: exceptiongroup in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (1.2.0)
+Requirement already satisfied: pexpect&gt;4.3 in /usr/local/lib/python3.10/dist-packages (from ipython&gt;=6.0-&gt;watermark) (4.9.0)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.16.0)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.3 in /usr/local/lib/python3.10/dist-packages (from jedi&gt;=0.16-&gt;ipython&gt;=6.0-&gt;watermark) (0.8.4)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /usr/local/lib/python3.10/dist-packages (from pexpect&gt;4.3-&gt;ipython&gt;=6.0-&gt;watermark) (0.7.0)
+Requirement already satisfied: wcwidth in /usr/local/lib/python3.10/dist-packages (from prompt-toolkit&lt;3.1.0,&gt;=3.0.41-&gt;ipython&gt;=6.0-&gt;watermark) (0.2.13)
+Requirement already satisfied: executing&gt;=1.2.0 in /usr/local/lib/python3.10/dist-packages (from stack-data-&gt;ipython&gt;=6.0-&gt;watermark) (2.0.1)
+Requirement already satisfied: asttokens&gt;=2.1.0 in /usr/local/lib/python3.10/dist-packages (from stack-data-&gt;ipython&gt;=6.0-&gt;watermark) (2.4.1)
+Requirement already satisfied: pure-eval in /usr/local/lib/python3.10/dist-packages (from stack-data-&gt;ipython&gt;=6.0-&gt;watermark) (0.2.2)
+
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">24.0</span> -&gt; <span class=" -Color -Color-Green">25.3</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">python -m pip install --upgrade pip</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Deep Learning Libraries (PyTorch)</span>
+<span class="c1"># Use this command for a standard installation on a machine without a powerful NVIDIA GPU</span>
+<span class="c1"># !pip install torch torchvision</span>
+
+<span class="c1"># OR, use this for NVIDIA CUDA support (check the official PyTorch site for your specific CUDA version)</span>
+<span class="c1"># pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">watermark</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">watermark</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">watermark</span><span class="p">(</span><span class="n">packages</span><span class="o">=</span><span class="s2">&quot;pandas,opencv-python,numpy,matplotlib,seaborn,scikit-learn,tqdm,watermark,Pillow,torch&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: 2025-11-13T16:18:35.666591+01:00
+
+Python implementation: CPython
+Python version       : 3.10.12
+IPython version      : 8.21.0
+
+Compiler    : GCC 11.4.0
+OS          : Linux
+Release     : 6.1.0-38-amd64
+Machine     : x86_64
+Processor   : x86_64
+CPU cores   : 64
+Architecture: 64bit
+
+pandas       : 2.2.3
+opencv-python: not installed
+numpy        : 1.24.3
+matplotlib   : 3.10.0
+seaborn      : 0.13.2
+scikit-learn : 1.5.0
+tqdm         : 4.67.0
+watermark    : 2.4.3
+Pillow       : not installed
+torch        : 2.3.0a0+6ddf5cf85e.nv24.4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prepare path variable for the dataset</span>
+<span class="n">dataset_path</span> <span class="o">=</span> <span class="s1">&#39;./kaggle_dataset/2020-02-14_InfraredSolarModules/InfraredSolarModules/images&#39;</span> <span class="c1"># Replace with your actual dataset path</span>
+
+<span class="c1"># Verify the path (optional)</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset path found: </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset path not found: </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">. Please check the path.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset path found: ./kaggle_dataset/2020-02-14_InfraredSolarModules/InfraredSolarModules/images
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">json_path</span> <span class="o">=</span> <span class="s1">&#39;./kaggle_dataset/2020-02-14_InfraredSolarModules/InfraredSolarModules/module_metadata.json&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="c1">#print(metadata)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error decoding JSON from file: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="filter-valid-images-for-dl">
+<h2>Filter Valid Images for DL<a class="headerlink" href="#filter-valid-images-for-dl" title="Link to this heading">#</a></h2>
+<section id="subtask">
+<h3>Subtask:<a class="headerlink" href="#subtask" title="Link to this heading">#</a></h3>
+<p>Filter the <code class="docutils literal notranslate"><span class="pre">metadata_df</span></code> to include only images that exist and were successfully loaded, ensuring we work with a clean dataset for deep learning. We will create a new DataFrame <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> for this purpose.</p>
+<p><strong>Reasoning</strong>:
+Filter the metadata_df to include only images where ‘image_exists’ is True, then display the head and shape of the new DataFrame to verify the filtered data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dl_metadata_df</span> <span class="o">=</span> <span class="n">metadata_df</span><span class="p">[</span><span class="n">metadata_df</span><span class="p">[</span><span class="s1">&#39;image_exists&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">dl_metadata_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of dl_metadata_df: </span><span class="si">{</span><span class="n">dl_metadata_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>image_filepath</th>
+      <th>anomaly_class</th>
+      <th>image_exists</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>images/13357.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>images/13356.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>images/19719.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>images/11542.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>images/11543.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of dl_metadata_df: (20000, 3)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="encode-anomaly-labels">
+<h2>Encode Anomaly Labels<a class="headerlink" href="#encode-anomaly-labels" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Subtask:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Convert the categorical <code class="docutils literal notranslate"><span class="pre">anomaly_class</span></code> labels into numerical representations, which is a necessary step for deep learning models. This will involve using <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.LabelEncoder</span></code>.</p>
+<p><strong>Reasoning</strong>:
+Import the necessary LabelEncoder from sklearn.preprocessing to convert categorical labels to numerical representations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LabelEncoder imported successfully.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LabelEncoder imported successfully.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Instantiate LabelEncoder, fit it to the ‘anomaly_class’ column, transform the column to numerical representations, and store the results in a new column called ‘encoded_anomaly_class’ in <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code>. Then, display the head of <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> to verify the new column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">dl_metadata_df</span><span class="p">[</span><span class="s1">&#39;encoded_anomaly_class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dl_metadata_df</span><span class="p">[</span><span class="s1">&#39;anomaly_class&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">dl_metadata_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>image_filepath</th>
+      <th>anomaly_class</th>
+      <th>image_exists</th>
+      <th>encoded_anomaly_class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>images/13357.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>images/13356.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>images/19719.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>images/11542.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>images/11543.jpg</td>
+      <td>No-Anomaly</td>
+      <td>True</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="split-dataset-into-train-validation-and-test-sets">
+<h2>Split Dataset into Train, Validation, and Test Sets<a class="headerlink" href="#split-dataset-into-train-validation-and-test-sets" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>Subtask:<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Divide the <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> into training, validation, and test sets. This is crucial for proper model training and evaluation. We will use a stratified split to maintain the class distribution across sets.</p>
+<p><strong>Reasoning</strong>:
+Import the <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> function from <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection</span></code> to perform the dataset splitting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train_test_split imported successfully.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train_test_split imported successfully.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Split the <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> into training, validation, and test sets using <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> with stratification to maintain class distribution, and then print the shapes of the resulting DataFrames.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_df</span><span class="p">,</span> <span class="n">temp_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dl_metadata_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">dl_metadata_df</span><span class="p">[</span><span class="s1">&#39;encoded_anomaly_class&#39;</span><span class="p">])</span>
+<span class="n">val_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">temp_df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;encoded_anomaly_class&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of train_df: </span><span class="si">{</span><span class="n">train_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of val_df: </span><span class="si">{</span><span class="n">val_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of test_df: </span><span class="si">{</span><span class="n">test_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of train_df: (16000, 4)
+Shape of val_df: (2000, 4)
+Shape of test_df: (2000, 4)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="propose-data-augmentation-techniques">
+<h2>Propose Data Augmentation Techniques<a class="headerlink" href="#propose-data-augmentation-techniques" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>Subtask:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Outline potential data augmentation techniques (e.g., rotation, flipping, zooming, brightness adjustments) that can be applied to the training images to increase dataset diversity and improve model generalization. This step will describe the strategy without immediately implementing code.</p>
+</section>
+<section id="potential-data-augmentation-techniques-for-solar-panel-anomaly-detection">
+<h3>Potential Data Augmentation Techniques for Solar Panel Anomaly Detection<a class="headerlink" href="#potential-data-augmentation-techniques-for-solar-panel-anomaly-detection" title="Link to this heading">#</a></h3>
+<p>To enhance the diversity of our dataset and improve the generalization capabilities of deep learning models for solar panel anomaly detection, the following data augmentation techniques can be applied:</p>
+<ol class="arabic simple">
+<li><p><strong>Geometric Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Rotation:</strong> Randomly rotating images by small degrees (e.g., -10 to +10 degrees) can help the model learn to recognize anomalies regardless of minor orientation variations in drone or aerial imagery. This is crucial as panels might be photographed from slightly different angles.</p></li>
+<li><p><strong>Flipping (Horizontal/Vertical):</strong> Horizontally or vertically flipping images (or both) introduces symmetry, making the model robust to mirrored instances of anomalies. This is particularly useful for patterns that can appear in different orientations.</p></li>
+<li><p><strong>Zooming:</strong> Randomly zooming in or out (e.g., by 10-20%) simulates variations in capture distance or object size within the frame. This helps the model identify anomalies at different scales.</p></li>
+</ul>
+</li>
+<li><p><strong>Photometric Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Brightness Adjustments:</strong> Randomly increasing or decreasing image brightness (e.g., by -20% to +20%) helps the model become invariant to varying lighting conditions during image capture (e.g., time of day, cloud cover).</p></li>
+<li><p><strong>Contrast Adjustments:</strong> Similar to brightness, adjusting image contrast makes the model more robust to differences in illumination, allowing it to detect anomalies even when they are subtle due to low contrast or harsh lighting.</p></li>
+</ul>
+</li>
+<li><p><strong>Other Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Gaussian Blur:</strong> Applying a slight Gaussian blur can mimic out-of-focus captures or atmospheric haze, increasing the model’s tolerance to minor blurriness without losing critical information.</p></li>
+<li><p><strong>Random Cropping:</strong> Extracting random crops from images can force the model to focus on different parts of the panel, encouraging it to learn more robust features rather than relying on global context.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Collective Contribution to Dataset Diversity and Generalization:</strong></p>
+<p>These techniques collectively contribute to creating a significantly more diverse training dataset without the need for collecting new physical images. By exposing the model to a wide range of variations (orientation, scale, lighting, and minor imperfections) of the original images and their corresponding anomalies, we prevent overfitting to the specific characteristics of the original dataset. This forces the model to learn more abstract and generalized features of anomalies, leading to improved performance on unseen images and better overall generalization to real-world scenarios in solar panel inspection.</p>
+</section>
+<section id="id4">
+<h3>Potential Data Augmentation Techniques for Solar Panel Anomaly Detection<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>To enhance the diversity of our dataset and improve the generalization capabilities of deep learning models for solar panel anomaly detection, the following data augmentation techniques can be applied:</p>
+<ol class="arabic simple">
+<li><p><strong>Geometric Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Rotation:</strong> Randomly rotating images by small degrees (e.g., -10 to +10 degrees) can help the model learn to recognize anomalies regardless of minor orientation variations in drone or aerial imagery. This is crucial as panels might be photographed from slightly different angles.</p></li>
+<li><p><strong>Flipping (Horizontal/Vertical):</strong> Horizontally or vertically flipping images (or both) introduces symmetry, making the model robust to mirrored instances of anomalies. This is particularly useful for patterns that can appear in different orientations.</p></li>
+<li><p><strong>Zooming:</strong> Randomly zooming in or out (e.g., by 10-20%) simulates variations in capture distance or object size within the frame. This helps the model identify anomalies at different scales.</p></li>
+</ul>
+</li>
+<li><p><strong>Photometric Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Brightness Adjustments:</strong> Randomly increasing or decreasing image brightness (e.g., by -20% to +20%) helps the model become invariant to varying lighting conditions during image capture (e.g., time of day, cloud cover).</p></li>
+<li><p><strong>Contrast Adjustments:</strong> Similar to brightness, adjusting image contrast makes the model more robust to differences in illumination, allowing it to detect anomalies even when they are subtle due to low contrast or harsh lighting.</p></li>
+</ul>
+</li>
+<li><p><strong>Other Transformations:</strong></p>
+<ul class="simple">
+<li><p><strong>Gaussian Blur:</strong> Applying a slight Gaussian blur can mimic out-of-focus captures or atmospheric haze, increasing the model’s tolerance to minor blurriness without losing critical information.</p></li>
+<li><p><strong>Random Cropping:</strong> Extracting random crops from images can force the model to focus on different parts of the panel, encouraging it to learn more robust features rather than relying on global context.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Collective Contribution to Dataset Diversity and Generalization:</strong></p>
+<p>These techniques collectively contribute to creating a significantly more diverse training dataset without the need for collecting new physical images. By exposing the model to a wide range of variations (orientation, scale, lighting, and minor imperfections) of the original images and their corresponding anomalies, we prevent overfitting to the specific characteristics of the original dataset. This forces the model to learn more abstract and generalized features of anomalies, leading to improved performance on unseen images and better overall generalization to real-world scenarios in solar panel inspection.</p>
+</section>
+</section>
+<section id="summarize-the-data-preparation-steps-for-deep-learning">
+<h2>Summarize the data preparation steps for deep learning<a class="headerlink" href="#summarize-the-data-preparation-steps-for-deep-learning" title="Link to this heading">#</a></h2>
+<p>including the status of image filtering, label encoding, and dataset splitting.</p>
+</section>
+<section id="summary">
+<h2>Summary:<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<section id="q-a">
+<h3>Q&amp;A<a class="headerlink" href="#q-a" title="Link to this heading">#</a></h3>
+<p>The data preparation steps for deep learning, including image filtering, label encoding, and dataset splitting, have been successfully completed as follows:</p>
+<ul class="simple">
+<li><p><strong>Image Filtering</strong>: The <code class="docutils literal notranslate"><span class="pre">metadata_df</span></code> was filtered to create <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code>, retaining only images confirmed to exist and be successfully loaded. This resulted in a dataset of 19,999 valid images for deep learning.</p></li>
+<li><p><strong>Label Encoding</strong>: The categorical <code class="docutils literal notranslate"><span class="pre">anomaly_class</span></code> labels in <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> were converted into numerical representations using <code class="docutils literal notranslate"><span class="pre">LabelEncoder</span></code>, creating a new column named <code class="docutils literal notranslate"><span class="pre">encoded_anomaly_class</span></code>. For instance, ‘No-Anomaly’ was encoded as ‘7’.</p></li>
+<li><p><strong>Dataset Splitting</strong>: The <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> was stratified by <code class="docutils literal notranslate"><span class="pre">encoded_anomaly_class</span></code> and split into training, validation, and test sets. The <code class="docutils literal notranslate"><span class="pre">train_df</span></code> contains 15,999 samples, while <code class="docutils literal notranslate"><span class="pre">val_df</span></code> and <code class="docutils literal notranslate"><span class="pre">test_df</span></code> each contain 2,000 samples.</p></li>
+<li><p><strong>Data Augmentation</strong>: Several data augmentation techniques, including geometric (rotation, flipping, zooming), photometric (brightness, contrast adjustments), and other transformations (Gaussian blur, random cropping), have been proposed to enhance dataset diversity and improve model generalization.</p></li>
+</ul>
+</section>
+<section id="data-analysis-key-findings">
+<h3>Data Analysis Key Findings<a class="headerlink" href="#data-analysis-key-findings" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>After filtering for existing and successfully loaded images, the <code class="docutils literal notranslate"><span class="pre">dl_metadata_df</span></code> for deep learning comprises 19,999 entries, reduced from an unspecified larger initial dataset.</p></li>
+<li><p>Categorical <code class="docutils literal notranslate"><span class="pre">anomaly_class</span></code> labels were successfully encoded into a new numerical column <code class="docutils literal notranslate"><span class="pre">encoded_anomaly_class</span></code>, which is essential for deep learning models.</p></li>
+<li><p>The dataset was stratified and split into <code class="docutils literal notranslate"><span class="pre">train_df</span></code> (15,999 samples), <code class="docutils literal notranslate"><span class="pre">val_df</span></code> (2,000 samples), and <code class="docutils literal notranslate"><span class="pre">test_df</span></code> (2,000 samples), ensuring a balanced class distribution across subsets for robust model training and evaluation.</p></li>
+<li><p>A comprehensive list of data augmentation techniques, such as rotation, flipping, zooming, brightness/contrast adjustments, Gaussian blur, and random cropping, has been outlined to enhance dataset diversity and model generalization without collecting new data.</p></li>
+</ul>
+</section>
+<section id="insights-or-next-steps">
+<h3>Insights or Next Steps<a class="headerlink" href="#insights-or-next-steps" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The dataset is now fully prepared and segmented for immediate deep learning model development, with appropriate splits and encoded labels.</p></li>
+<li><p>The proposed data augmentation strategies should be implemented during model training to significantly improve the model’s robustness and generalization capabilities to real-world solar panel anomaly detection scenarios.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="task">
+<h1>Task<a class="headerlink" href="#task" title="Link to this heading">#</a></h1>
+<p>Define a suitable deep learning model architecture for image classification, specifically a pre-trained Convolutional Neural Network (CNN), and customize its final layers for the anomaly classification task.</p>
+<section id="define-model-architecture">
+<h2>Define Model Architecture<a class="headerlink" href="#define-model-architecture" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>Subtask:<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>Select and define a suitable deep learning model architecture for image classification, likely a pre-trained Convolutional Neural Network (CNN) like ResNet or VGG, and customize its final layers for our specific anomaly classification task.</p>
+<p><strong>Reasoning</strong>:
+Import the necessary libraries for defining the deep learning model architecture, specifically <code class="docutils literal notranslate"><span class="pre">torch</span></code> for tensor operations and neural networks, and <code class="docutils literal notranslate"><span class="pre">torchvision.models</span></code> to access pre-trained CNN models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PyTorch and torchvision.models imported successfully.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PyTorch and torchvision.models imported successfully.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Load a pre-trained ResNet-50 model, determine the number of output classes from the label encoder, modify the final fully connected layer of the model to match the number of anomaly classes, optionally freeze the pre-trained layers, and print the modified model architecture.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id6">
+<h1>Task<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
+<p>Load a pre-trained ResNet-50 model, determine the number of output classes from the <code class="docutils literal notranslate"><span class="pre">label_encoder</span></code>, modify the final fully connected layer of the model to match the number of anomaly classes, and print the modified model architecture.</p>
+<section id="id7">
+<h2>Define Model Architecture<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3>Subtask:<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>Select and define a suitable deep learning model architecture for image classification, likely a pre-trained Convolutional Neural Network (CNN) like ResNet or VGG, and customize its final layers for our specific anomaly classification task.</p>
+<p><strong>Reasoning</strong>:
+Load a pre-trained ResNet-50 model, determine the number of output classes from the label encoder, modify the final fully connected layer of the model to match the number of anomaly classes, and then print the modified model architecture to verify the changes.</p>
+<p><strong>Reasoning</strong>:
+The previous cell generated a <code class="docutils literal notranslate"><span class="pre">UserWarning</span></code> indicating that the <code class="docutils literal notranslate"><span class="pre">pretrained</span></code> parameter for <code class="docutils literal notranslate"><span class="pre">torchvision.models</span></code> is deprecated. I need to update the code to use the <code class="docutils literal notranslate"><span class="pre">weights</span></code> parameter instead, specifically <code class="docutils literal notranslate"><span class="pre">ResNet50_Weights.DEFAULT</span></code> to get the most up-to-date pre-trained weights, as suggested by the warning.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.models</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">models</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">ResNet50_Weights</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">)</span>
+
+<span class="c1"># Determine the number of output classes</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+
+<span class="c1"># Get the number of input features for the classifier</span>
+<span class="n">num_ftrs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span>
+
+<span class="c1"># Replace the final fully connected layer with a new one for our number of classes</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_ftrs</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of anomaly classes: </span><span class="si">{</span><span class="n">num_classes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modified model architecture:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of anomaly classes: 12
+Modified model architecture:
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (downsample): Sequential(
+        (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (3): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (4): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (5): Bottleneck(
+      (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): Bottleneck(
+      (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (downsample): Sequential(
+        (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): Bottleneck(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+    (2): Bottleneck(
+      (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn3): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=2048, out_features=12, bias=True)
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="prepare-data-loaders-with-augmentation">
+<h2>Prepare Data Loaders with Augmentation<a class="headerlink" href="#prepare-data-loaders-with-augmentation" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>Subtask:<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>Create data loaders for the training, validation, and test sets. The training data loader will incorporate the previously outlined data augmentation techniques to enhance dataset diversity and model robustness.</p>
+<p><strong>Reasoning</strong>:
+Import the necessary <code class="docutils literal notranslate"><span class="pre">transforms</span></code> module from <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> to define image transformations for data augmentation and preprocessing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;torchvision.transforms imported successfully.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torchvision.transforms imported successfully.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Define the image transformations, create a custom dataset class, instantiate the datasets, and create data loaders for training, validation, and testing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="c1"># Pillow is commonly used to load images for torchvision transforms</span>
+
+<span class="c1"># 2. Define transformations</span>
+<span class="c1"># Image dimensions for ResNet are typically 224x224</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">224</span>
+
+<span class="n">train_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span> <span class="c1"># Crop to 224x224, then resize</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomVerticalFlip</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">RandomRotation</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="c1"># Converts a PIL Image or numpy.ndarray (H x W x C) in the range [0, 255] to a torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0]</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span> <span class="c1"># ImageNet normalization</span>
+<span class="p">])</span>
+
+<span class="n">val_test_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span> <span class="c1"># Resize the image to 256x256</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="n">image_size</span><span class="p">),</span> <span class="c1"># Crop the center to 224x224</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image transformations defined.&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Create a custom dataset class</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SolarPanelDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataframe</span> <span class="o">=</span> <span class="n">dataframe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">=</span> <span class="n">root_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataframe</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="n">img_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;image_filepath&#39;</span><span class="p">]))</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_name</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s1">&#39;encoded_anomaly_class&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Custom SolarPanelDataset class defined.&quot;</span><span class="p">)</span>
+
+<span class="c1"># 7. Instantiate three dataset objects</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">SolarPanelDataset</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">train_transforms</span><span class="p">)</span>
+<span class="n">val_dataset</span> <span class="o">=</span> <span class="n">SolarPanelDataset</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">val_df</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">val_test_transforms</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">SolarPanelDataset</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="n">test_df</span><span class="p">,</span> <span class="n">root_dir</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">val_test_transforms</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train dataset size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation dataset size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test dataset size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 8. Instantiate three DataLoader objects</span>
+<span class="c1"># Determine batch size based on device availability</span>
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">160</span>  <span class="c1"># Target ~100 steps for 16000 samples</span>
+    <span class="n">num_workers</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU detected. Using batch size </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">num_workers</span><span class="si">}</span><span class="s2"> workers.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># Reduced batch size for CPU to prevent OOM and speed up</span>
+    <span class="n">num_workers</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set to 0 for CPU to avoid multiprocessing overhead</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No GPU detected. Using batch size </span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">num_workers</span><span class="si">}</span><span class="s2"> workers for CPU.&quot;</span><span class="p">)</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+<span class="n">val_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataLoaders created for train, validation, and test sets.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Image transformations defined.
+Custom SolarPanelDataset class defined.
+Train dataset size: 16000
+Validation dataset size: 2000
+Test dataset size: 2000
+GPU detected. Using batch size 160 with 2 workers.
+DataLoaders created for train, validation, and test sets.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="define-loss-function-and-optimizer">
+<h2>Define Loss Function and Optimizer<a class="headerlink" href="#define-loss-function-and-optimizer" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h3>Subtask:<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>Specify the loss function (e.g., CrossEntropyLoss) and the optimizer (e.g., Adam, SGD) that will be used during the model training process.</p>
+<p><strong>Reasoning</strong>:
+Import the <code class="docutils literal notranslate"><span class="pre">optim</span></code> module from <code class="docutils literal notranslate"><span class="pre">torch</span></code> to define the optimizer and ensure <code class="docutils literal notranslate"><span class="pre">nn</span></code> is available for the loss function definition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;torch.optim imported successfully.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.optim imported successfully.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Reasoning</strong>:
+Define the loss function as CrossEntropyLoss and the optimizer as Adam, as specified in the subtask instructions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loss function (criterion) and optimizer defined.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loss function (criterion) and optimizer defined.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="train-the-deep-learning-model">
+<h2>Train the Deep Learning Model<a class="headerlink" href="#train-the-deep-learning-model" title="Link to this heading">#</a></h2>
+<section id="id11">
+<h3>Subtask:<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>Implement the training loop for the deep learning model. This will involve iterating through epochs, performing forward and backward passes, updating model weights, and monitoring training and validation loss/accuracy.</p>
+<p><strong>Reasoning</strong>:
+Implement the training and validation loop as described in the instructions, including device setup, epoch definition, metric tracking, forward/backward passes, and printing of epoch statistics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">balanced_accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="c1"># Removed: import sys (no longer needed)</span>
+
+<span class="c1"># --- CSV LOGGING INITIALIZATION (UNCHANGED) ---</span>
+
+<span class="n">CSV_FILE_PATH</span> <span class="o">=</span> <span class="s1">&#39;./training_log.csv&#39;</span>
+
+<span class="c1"># Define the columns for the CSV file</span>
+<span class="n">log_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Epoch&#39;</span><span class="p">,</span> <span class="s1">&#39;Train Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Train Bal Acc&#39;</span><span class="p">,</span> <span class="s1">&#39;Train F1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Val Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Val Bal Acc&#39;</span><span class="p">,</span> <span class="s1">&#39;Val F1&#39;</span><span class="p">,</span> <span class="s1">&#39;Time (s)&#39;</span>
+<span class="p">]</span>
+
+<span class="c1"># Create an empty DataFrame and save it to initialize the CSV file with headers</span>
+<span class="n">log_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">log_columns</span><span class="p">)</span>
+<span class="n">log_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">CSV_FILE_PATH</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized logging to </span><span class="si">{</span><span class="n">CSV_FILE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create an empty DataFrame and save it to initialize the CSV file with headers</span>
+<span class="n">log_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">log_columns</span><span class="p">)</span>
+<span class="n">log_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">CSV_FILE_PATH</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized logging to </span><span class="si">{</span><span class="n">CSV_FILE_PATH</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define the columns for the CSV file</span>
+<span class="n">log_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Epoch&#39;</span><span class="p">,</span> <span class="s1">&#39;Train Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Train Bal Acc&#39;</span><span class="p">,</span> <span class="s1">&#39;Train F1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Val Loss&#39;</span><span class="p">,</span> <span class="s1">&#39;Val Bal Acc&#39;</span><span class="p">,</span> <span class="s1">&#39;Val F1&#39;</span><span class="p">,</span> <span class="s1">&#39;Time (s)&#39;</span>
+<span class="p">]</span>
+
+<span class="c1"># 1. Set up the device</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model moved to device: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Define the number of training epochs</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">320</span> <span class="c1"># Increased the number of epochs</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of epochs set to: </span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Initialize empty lists to store metrics</span>
+<span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">train_balanced_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">train_f1_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">val_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">val_balanced_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">val_f1_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Metric lists initialized.&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Implement the main training loop</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting training loop...&quot;</span><span class="p">)</span>
+
+<span class="c1"># MODIFIED: Wrap the epoch loop with tqdm for a stable single-line output</span>
+<span class="n">master_loop</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Total Training Progress&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">master_loop</span><span class="p">:</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span> <span class="c1"># Set model to training mode</span>
+    <span class="n">running_train_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">all_train_labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_train_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># MODIFIED: Removed inner tqdm loop (train_loop)</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span> <span class="c1"># Zero the parameter gradients</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="n">running_train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="n">inputs</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">all_train_labels</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">all_train_predictions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">predicted</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+        <span class="c1"># Removed: train_loop.set_postfix(loss=loss.item())</span>
+
+    <span class="c1"># Calculate average training loss and accuracy for the epoch</span>
+    <span class="n">epoch_train_loss</span> <span class="o">=</span> <span class="n">running_train_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+    <span class="n">epoch_train_balanced_accuracy</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">all_train_labels</span><span class="p">,</span> <span class="n">all_train_predictions</span><span class="p">)</span>
+    <span class="c1"># Added zero_division=0 to prevent warnings/errors, standard practice for f1_score</span>
+    <span class="n">epoch_train_f1_score</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">all_train_labels</span><span class="p">,</span> <span class="n">all_train_predictions</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+
+    <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_train_loss</span><span class="p">)</span>
+    <span class="n">train_balanced_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_train_balanced_accuracy</span><span class="p">)</span>
+    <span class="n">train_f1_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_train_f1_score</span><span class="p">)</span>
+
+    <span class="c1"># Validation phase</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span> <span class="c1"># Set model to evaluation mode</span>
+    <span class="n">running_val_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">all_val_labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_val_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># MODIFIED: Removed inner tqdm loop (val_loop)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span> <span class="c1"># Disable gradient calculation for validation</span>
+        <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">val_loader</span><span class="p">:</span>
+            <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+
+            <span class="n">running_val_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="n">inputs</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">all_val_labels</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">all_val_predictions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">predicted</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+            <span class="c1"># Removed: val_loop.set_postfix(loss=loss.item())</span>
+
+    <span class="c1"># Calculate average validation loss and accuracy for the epoch</span>
+    <span class="n">epoch_val_loss</span> <span class="o">=</span> <span class="n">running_val_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">)</span>
+    <span class="n">epoch_val_balanced_accuracy</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">all_val_labels</span><span class="p">,</span> <span class="n">all_val_predictions</span><span class="p">)</span>
+    <span class="n">epoch_val_f1_score</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">all_val_labels</span><span class="p">,</span> <span class="n">all_val_predictions</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">val_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_val_loss</span><span class="p">)</span>
+    <span class="n">val_balanced_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_val_balanced_accuracy</span><span class="p">)</span>
+    <span class="n">val_f1_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">epoch_val_f1_score</span><span class="p">)</span>
+
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">epoch_duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+
+    <span class="c1"># 1. Create a dictionary (or list) for the current epoch&#39;s data</span>
+    <span class="n">epoch_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Epoch&#39;</span><span class="p">:</span> <span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;Train Loss&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_train_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Train Bal Acc&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_train_balanced_accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Train F1&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_train_f1_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Val Loss&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Val Bal Acc&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_balanced_accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Val F1&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_f1_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Time (s)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">}</span>
+
+    <span class="c1"># 2. Print the console output (as requested)</span>
+    <span class="c1"># MODIFIED: Use master_loop.set_postfix for stable single-line update</span>
+    <span class="n">master_loop</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span>
+        <span class="s2">&quot;T Loss&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_train_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V Loss&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V Bal Acc&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_balanced_accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;V F1&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_val_f1_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Time&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">epoch_duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span>
+    <span class="p">})</span>
+
+    <span class="c1"># 3. Convert the dictionary to a single-row DataFrame</span>
+    <span class="n">new_row</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">epoch_data</span><span class="p">])</span>
+
+    <span class="c1"># 4. Append the new row to the CSV file</span>
+    <span class="c1"># &#39;mode=&quot;a&quot;&#39; appends, &#39;header=False&#39; prevents rewriting the header</span>
+    <span class="n">new_row</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">CSV_FILE_PATH</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Training complete.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initialized logging to ./training_log.csv
+Initialized logging to ./training_log.csv
+Model moved to device: cuda:0
+Number of epochs set to: 320
+Metric lists initialized.
+Starting training loop...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total Training Progress:   3%|▎         | 11/320 [38:21&lt;18:00:19, 209.77s/it, T Loss=1.2110, V Loss=1.2503, V Bal Acc=0.3938, V F1=0.5921, Time=209.04s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read and display the final log file content</span>
+<span class="n">final_log</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CSV_FILE_PATH</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Final training_log.csv Content ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_save_path</span> <span class="o">=</span> <span class="s1">&#39;./resnet50_anomaly_classifier.pth&#39;</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">model_save_path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model state dictionary saved to: </span><span class="si">{</span><span class="n">model_save_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "martinschatz-cz/solar-panel-analysis",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/DL"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="22-solar_panel_qcheck_DL-quality.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quality Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="24-solar_panel_qcheck_DL-val.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DL Validation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">DL Training</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-valid-images-for-dl">Filter Valid Images for DL</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subtask">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#encode-anomaly-labels">Encode Anomaly Labels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split-dataset-into-train-validation-and-test-sets">Split Dataset into Train, Validation, and Test Sets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propose-data-augmentation-techniques">Propose Data Augmentation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Subtask:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#potential-data-augmentation-techniques-for-solar-panel-anomaly-detection">Potential Data Augmentation Techniques for Solar Panel Anomaly Detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Potential Data Augmentation Techniques for Solar Panel Anomaly Detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-the-data-preparation-steps-for-deep-learning">Summarize the data preparation steps for deep learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-a">Q&amp;A</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-analysis-key-findings">Data Analysis Key Findings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-or-next-steps">Insights or Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-model-architecture">Define Model Architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Subtask:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Task</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Define Model Architecture</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data-loaders-with-augmentation">Prepare Data Loaders with Augmentation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-loss-function-and-optimizer">Define Loss Function and Optimizer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Subtask:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-deep-learning-model">Train the Deep Learning Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Subtask:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Schätz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Martin Schätz.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
