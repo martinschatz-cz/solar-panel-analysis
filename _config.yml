@@ -2,6 +2,9 @@ title: Solar Panel Analysis
 copyright: '2025, Martin Schätz'
 author: Martin Schätz
 
+html:
+  baseurl: "https://www.schaetz.cz/solar-panel-analysis/"
+
 execute:
   execute_notebooks: "off"
 
