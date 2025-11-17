@@ -1,0 +1,1041 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Jupyter Based Content &#8212; Solar Panel Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/justify.css?v=564be945" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/xx_jupyter';</script>
+    <script src="../_static/analytics.js?v=a5ca5447"></script>
+    <script src="../_static/analytics_gtag.js?v=9197bb07"></script>
+    <link rel="canonical" href="https://martinschatz-cz.github.io/solar-panel-analysis/chapters/xx_jupyter.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="00_introduction.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Solar Panel Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_introduction.html">
+                    📸 Quantitative Image Analysis: An Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_dataset-overview.html">Datasets overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Detect - YOLOv8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Detect/00-YOLOv8_no_augment_qcheck-quality.html">Download and prepare data</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/01-YOLOv8_no_augment_qcheck-objects.html">Download and prepare data</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/02-YOLOv8_no_augment_qcheck-training.html">Download and prepare data</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/03-YOLOv8_no_augment_qcheck-validation.html">Download and prepare data</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - Classic approach</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Classic/11-solar_panel_qcheck_br_morph-prep.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classic/12-solar_panel_qcheck_br_morph-quality.html">Perform image quality and integrity checks</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Classic/13-solar_panel_qcheck_br_morph-clustering.html">Analyze images</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL ResNet50</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="DL/21-solar_panel_qcheck_DL-prep.html">Task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DL/22-solar_panel_qcheck_DL-quality.html">Check image integrity</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="DL/23-solar_panel_qcheck_DL-training.html">Filter Valid Images for DL</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="DL/24-solar_panel_qcheck_DL-val.html">Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL YOLO</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="YOLO/31-solar_panel_qcheck_DL-yolo-train.html">Visualize anomaly distribution</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="YOLO/32-solar_panel_qcheck_DL-yolo-val.html">Initialize and Load YOLOv8 Model</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/martinschatz-cz/solar-panel-analysis/main?urlpath=tree/chapters/xx_jupyter.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/martinschatz-cz/solar-panel-analysis/blob/main/chapters/xx_jupyter.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis/edit/main/chapters/xx_jupyter.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/xx_jupyter.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Jupyter Based Content</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-markdown">Standard Markdown</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-formating">Text Formating</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quotes">Quotes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#horizontal-rule">Horizontal Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#images">Images</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limited-support">Limited Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-of-code">Block of Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math">Math</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#not-supported-in-jupyter-book">Not supported in Jupyter Book</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#strikethrough">Strikethrough</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#check-list">Check List</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#myst-specific">MyST Specific</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colored-admonitions">Colored Admonitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hidden-toggles">Hidden Toggles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropdowns">Dropdowns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropdowns-with-admonitions">Dropdowns with Admonitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#panels">Panels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabs">Tabs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sidebars">Sidebars</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#margin-note">Margin Note</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equations">Equations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#without-label">Without Label</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-label">With Label</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#by-name">By Name</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography-for-names">Bibliography for Names</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#alphanumeric-sorted-by-author-year">Alphanumeric - Sorted by Author, year</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#alphanumeric-sorted-by-order-of-appearance">Alphanumeric - Sorted by order of appearance</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-sorted-by-author-year">Numeric - Sorted by Author, year</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-sorted-by-order-of-appearance">Numeric - Sorted by order of appearance</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#by-number">By Number</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography-for-numbers">Bibliography for Numbers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="jupyter-based-content">
+<h1>Jupyter Based Content<a class="headerlink" href="#jupyter-based-content" title="Link to this heading">#</a></h1>
+<p>This an idential copy of the Markdown Based Notebook chapter, but the source file was a Jupyter Notebook (.ipynb) instead of a Markdown (.md) file</p>
+<section id="standard-markdown">
+<h2>Standard Markdown<a class="headerlink" href="#standard-markdown" title="Link to this heading">#</a></h2>
+<p>These features are supported by all renderers as they are part of the basic set of features of Markdown. Some examples were extracted from the <a class="reference external" href="https://www.markdownguide.org/basic-syntax">official docs</a>.</p>
+<section id="text-formating">
+<h3>Text Formating<a class="headerlink" href="#text-formating" title="Link to this heading">#</a></h3>
+<p>In a Markdown text one can use <strong>bold</strong>, <em>italics</em> or <em><strong>both</strong></em>. It is also posible to combine it with <code class="docutils literal notranslate"><span class="pre">monospace</span></code>.</p>
+</section>
+<section id="quotes">
+<h3>Quotes<a class="headerlink" href="#quotes" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>It is also possible to quote</p>
+</div></blockquote>
+</section>
+<section id="lists">
+<h3>Lists<a class="headerlink" href="#lists" title="Link to this heading">#</a></h3>
+<p>To keep everything organize, one usually use lists either ordered</p>
+<ol class="arabic simple">
+<li><p>Step 1</p></li>
+<li><p>Step 2</p></li>
+<li><p>Step 3</p></li>
+</ol>
+<p>Or without any order</p>
+<ul class="simple">
+<li><p>Requirement 1</p></li>
+<li><p>Requirement 2</p></li>
+<li><p>Requirement 3</p></li>
+</ul>
+</section>
+<section id="horizontal-rule">
+<h3>Horizontal Rule<a class="headerlink" href="#horizontal-rule" title="Link to this heading">#</a></h3>
+<p>Useful to separate sections</p>
+<hr class="docutils" />
+<p>From other non-related topic</p>
+</section>
+<section id="links">
+<h3>Links<a class="headerlink" href="#links" title="Link to this heading">#</a></h3>
+<p>You know that there many search engines online?</p>
+<p>There are <a class="reference external" href="https://duckduckgo.com/">some</a> which focus on privacy, <a class="reference external" href="https://www.startpage.com/">others</a> just work arround Google and <a class="reference external" href="https://www.searchencrypt.com/">there is also one</a> that uses ecryption!</p>
+</section>
+<section id="images">
+<h3>Images<a class="headerlink" href="#images" title="Link to this heading">#</a></h3>
+<p>One image is worth a thousand words some say</p>
+<p><img alt="Alternative text" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/663px-Jupyter_logo.svg.png" /></p>
+<p>But it is even better if you can click them</p>
+<p><a class="reference external" href="https://jupyter.org/"><img alt="Alternative text" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/663px-Jupyter_logo.svg.png" /></a></p>
+</section>
+</section>
+<section id="limited-support">
+<h2>Limited Support<a class="headerlink" href="#limited-support" title="Link to this heading">#</a></h2>
+<p>These features are part of some flavours of Markdown but not all renderers can process them. It is recommended to visualize this document in the target platform to check exactly which features are supported</p>
+<section id="tables">
+<h3>Tables<a class="headerlink" href="#tables" title="Link to this heading">#</a></h3>
+<p>Tables are really complicated in Markdown and should only be generated by <a class="reference external" href="http://www.tablesgenerator.com/markdown_tables">a specialized tool</a>. Don’t modify markdown tables manually</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Syntax</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Header</p></td>
+<td><p>Title</p></td>
+</tr>
+<tr class="row-odd"><td><p>Paragraph</p></td>
+<td><p>Text</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="block-of-code">
+<h3>Block of Code<a class="headerlink" href="#block-of-code" title="Link to this heading">#</a></h3>
+<p>For code blocks, Jupyter Book will add a <code class="docutils literal notranslate"><span class="pre">Copy</span></code> button in the top left corner to easily copy all the text in the block.</p>
+<p>Some times one wants to share data</p>
+<div class="highlight-default notranslate" id="data"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;firstName&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or simply say hello</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="footnotes">
+<h3>Footnotes<a class="headerlink" href="#footnotes" title="Link to this heading">#</a></h3>
+<p>Here’s a sentence with a footnote. <a class="footnote-reference brackets" href="#id19" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+</section>
+<section id="math">
+<h3>Math<a class="headerlink" href="#math" title="Link to this heading">#</a></h3>
+<p>Some renderers can process inline math, <span class="math notranslate nohighlight">\(x=2\)</span> and other can also process whole line math</p>
+<div class="math notranslate nohighlight">
+\[
+  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
+\]</div>
+<p>If supported, alignment can be done with array</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{llll}
+a_{11}&amp; =b_{11}&amp; a_{12}&amp; =b_{12}\\
+a_{21}&amp; =b_{21}&amp; a_{22}&amp; =b_{22}+c_{22}
+\end{array}
+\end{split}\]</div>
+</section>
+<section id="not-supported-in-jupyter-book">
+<h3>Not supported in Jupyter Book<a class="headerlink" href="#not-supported-in-jupyter-book" title="Link to this heading">#</a></h3>
+<p>These are features that some renderers support but are not supported by Jupyter Book</p>
+<section id="strikethrough">
+<h4>Strikethrough<a class="headerlink" href="#strikethrough" title="Link to this heading">#</a></h4>
+<p>Some times you ~~make a mistake~~ have a great idea</p>
+<p>However, a HTML approach can produce the desired result</p>
+<p>Some times you <s>make a mistake</s> have a great idea</p>
+</section>
+<section id="check-list">
+<h4>Check List<a class="headerlink" href="#check-list" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>[x] Write the press release</p></li>
+<li><p>[ ] Update the website</p></li>
+<li><p>[ ] Contact the media</p></li>
+</ul>
+<p>However, a HTML approach can produce the desired result</p>
+<p><label><input type="checkbox"> Write the press release</input></label><br>
+<label><input type="checkbox"> Update the website</input></label><br>
+<label><input type="checkbox"> Contact the media</input></label><br></p>
+</section>
+</section>
+</section>
+<section id="myst-specific">
+<h2>MyST Specific<a class="headerlink" href="#myst-specific" title="Link to this heading">#</a></h2>
+<p>These are some features that are the moment are only compatible with Jupyter Book. That means that rendering the notebook in other services (Github, NBviewer, Nteract, Data Lore, etc.) might not work as shown below. If your only target platform is Jupyter Book, you can use any of the following.</p>
+<section id="colored-admonitions">
+<h3>Colored Admonitions<a class="headerlink" href="#colored-admonitions" title="Link to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here is a Note</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Here is an important</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>text
+Here is a caution</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>text
+Here is an attention</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Here is a Warning</p>
+</div>
+<div class="admonition error">
+<p class="admonition-title">Error</p>
+<p>Here is an error</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>Here is a Tip</p>
+</div>
+<div class="admonition-admonition admonition">
+<p class="admonition-title">admonition</p>
+<p>Here is a custom admonition</p>
+</div>
+</section>
+<section id="hidden-toggles">
+<h3>Hidden Toggles<a class="headerlink" href="#hidden-toggles" title="Link to this heading">#</a></h3>
+<div class="toggle docutils container">
+<p>Some hidden toggle content!</p>
+</div>
+</section>
+<section id="dropdowns">
+<h3>Dropdowns<a class="headerlink" href="#dropdowns" title="Link to this heading">#</a></h3>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Outside Content</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Inside Content</p>
+</div>
+</details></section>
+<section id="dropdowns-with-admonitions">
+<span id="homework"></span><h3>Dropdowns with Admonitions<a class="headerlink" href="#dropdowns-with-admonitions" title="Link to this heading">#</a></h3>
+<div class="dropdown admonition note">
+<p class="admonition-title">Note</p>
+<p>The note body will be hidden!</p>
+</div>
+</section>
+<section id="panels">
+<h3>Panels<a class="headerlink" href="#panels" title="Link to this heading">#</a></h3>
+</section>
+<section id="tabs">
+<h3>Tabs<a class="headerlink" href="#tabs" title="Link to this heading">#</a></h3>
+</section>
+<section id="sidebars">
+<h3>Sidebars<a class="headerlink" href="#sidebars" title="Link to this heading">#</a></h3>
+<aside class="sidebar">
+<p class="sidebar-title">My sidebar title</p>
+<p>My sidebar content</p>
+</aside>
+<p>Sidebars are shown in parallel to the main text, but they span inwards from the margins.</p>
+</section>
+<section id="margin-note">
+<h3>Margin Note<a class="headerlink" href="#margin-note" title="Link to this heading">#</a></h3>
+<aside class="margin sidebar">
+<p class="sidebar-title">An optional title</p>
+<p>My margin content</p>
+</aside>
+<p>Margin notes are more discrete, useful for pointing minor details or add extra information.</p>
+<p>They span from the margin outwards</p>
+</section>
+<section id="labels">
+<h3>Labels<a class="headerlink" href="#labels" title="Link to this heading">#</a></h3>
+<p>Would you like to write homework for your students? Check the <a class="reference internal" href="xx_markdown.html#homework"><span class="std std-ref">dropdowns</span></a>!</p>
+<p>It is always important to provide enough <a class="reference internal" href="xx_markdown.html#data"><span class="std std-ref">data</span></a> to support claims!</p>
+</section>
+<section id="equations">
+<h3>Equations<a class="headerlink" href="#equations" title="Link to this heading">#</a></h3>
+<section id="without-label">
+<h4>Without Label<a class="headerlink" href="#without-label" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[x^2 + y^2 = 1\]</div>
+</section>
+<section id="with-label">
+<h4>With Label<a class="headerlink" href="#with-label" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight" id="equation-algebra">
+<span class="eqno">()<a class="headerlink" href="#equation-algebra" title="Link to this equation">#</a></span>\[x^2 + y^2 = 1\]</div>
+<p>If the equation has a label, it can be then referenced <a class="reference internal" href="xx_markdown.html#equation-algebra">()</a></p>
+</section>
+</section>
+<section id="citation">
+<h3>Citation<a class="headerlink" href="#citation" title="Link to this heading">#</a></h3>
+<p>There are two types of citations, by name (similar to APA style) and by number (similar to IEEE style).</p>
+<p>Citations can be customized, for more detailed explanations please refer to one of the Jupyter Book docs (<a class="reference external" href="https://jupyterbook.org/tutorials/references.html">here</a>, <a class="reference external" href="https://jupyterbook.org/content/references.html">here</a> or <a class="reference external" href="https://jupyterbook.org/content/citations.html">here</a>) and the <a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html">associated extension docs</a>.</p>
+<section id="by-name">
+<h4>By Name<a class="headerlink" href="#by-name" title="Link to this heading">#</a></h4>
+<p>This project uses the Python Language <span id="id2">[<a class="reference internal" href="xx_markdown.html#id14" title="Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. Computing in Science \\&amp; Engineering, 13(2):13–21, 2011.">Perez <em>et al.</em>, 2011</a>]</span>.to build Jupyter Book <span id="id3">[<a class="reference internal" href="xx_markdown.html#id15" title="Executable Books Community. Jupyter book. February 2020. URL: https://doi.org/10.5281/zenodo.4539666, doi:10.5281/zenodo.4539666.">Community, 2020</a>]</span></p>
+<p>This will not work unless there is a section called `bibliography``</p>
+</section>
+<section id="bibliography-for-names">
+<h4>Bibliography for Names<a class="headerlink" href="#bibliography-for-names" title="Link to this heading">#</a></h4>
+<p>There are different styles for the bibliography in this case</p>
+<section id="alphanumeric-sorted-by-author-year">
+<h5>Alphanumeric - Sorted by Author, year<a class="headerlink" href="#alphanumeric-sorted-by-author-year" title="Link to this heading">#</a></h5>
+<div class="docutils container" id="id4">
+<div role="list" class="citation-list">
+<div class="citation" id="id6" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">Com20</a><span class="fn-bracket">]</span></span>
+<p>Executable Books Community. Jupyter book. February 2020. URL: <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">https://doi.org/10.5281/zenodo.4539666</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">doi:10.5281/zenodo.4539666</a>.</p>
+</div>
+<div class="citation" id="id5" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">PGH11</a><span class="fn-bracket">]</span></span>
+<p>Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. <em>Computing in Science \\&amp; Engineering</em>, 13(2):13–21, 2011.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="alphanumeric-sorted-by-order-of-appearance">
+<h5>Alphanumeric - Sorted by order of appearance<a class="headerlink" href="#alphanumeric-sorted-by-order-of-appearance" title="Link to this heading">#</a></h5>
+<div class="docutils container" id="id7">
+<div role="list" class="citation-list">
+<div class="citation" id="id8" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">PGH11</a><span class="fn-bracket">]</span></span>
+<p>Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. <em>Computing in Science \\&amp; Engineering</em>, 13(2):13–21, 2011.</p>
+</div>
+<div class="citation" id="id9" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">Com20</a><span class="fn-bracket">]</span></span>
+<p>Executable Books Community. Jupyter book. February 2020. URL: <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">https://doi.org/10.5281/zenodo.4539666</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">doi:10.5281/zenodo.4539666</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="numeric-sorted-by-author-year">
+<h5>Numeric - Sorted by Author, year<a class="headerlink" href="#numeric-sorted-by-author-year" title="Link to this heading">#</a></h5>
+<div class="docutils container" id="id10">
+<div role="list" class="citation-list">
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<p>Executable Books Community. Jupyter book. February 2020. URL: <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">https://doi.org/10.5281/zenodo.4539666</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">doi:10.5281/zenodo.4539666</a>.</p>
+</div>
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. <em>Computing in Science \\&amp; Engineering</em>, 13(2):13–21, 2011.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="numeric-sorted-by-order-of-appearance">
+<h5>Numeric - Sorted by order of appearance<a class="headerlink" href="#numeric-sorted-by-order-of-appearance" title="Link to this heading">#</a></h5>
+<div class="docutils container" id="id13">
+<div role="list" class="citation-list">
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. <em>Computing in Science \\&amp; Engineering</em>, 13(2):13–21, 2011.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Executable Books Community. Jupyter book. February 2020. URL: <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">https://doi.org/10.5281/zenodo.4539666</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">doi:10.5281/zenodo.4539666</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="by-number">
+<h4>By Number<a class="headerlink" href="#by-number" title="Link to this heading">#</a></h4>
+<p>This project uses the Python Language <a class="footnote-reference brackets" href="#footcite-perez2011python" id="id16" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.to build Jupyter Book <a class="footnote-reference brackets" href="#footcite-executable-book" id="id17" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<p>This will not work unless there is a section called <code class="docutils literal notranslate"><span class="pre">footbibliography</span></code></p>
+<p>For different citation styles, check the <a class="reference external" href="https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#roles-and-directives">official docs</a></p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">footcite</span></code> and <code class="docutils literal notranslate"><span class="pre">footbibliography</span></code>, the numbers will be arranged in combination with the footnotes. This could lead to confusion for the reader if this type of references are used in combination with footnotes. To mitigate this issue, a similar result can be achieve using <code class="docutils literal notranslate"><span class="pre">cite</span></code> and <code class="docutils literal notranslate"><span class="pre">bibliography</span></code> with the <code class="docutils literal notranslate"><span class="pre">unsrt</span></code> style.</p>
+</section>
+<section id="bibliography-for-numbers">
+<h4>Bibliography for Numbers<a class="headerlink" href="#bibliography-for-numbers" title="Link to this heading">#</a></h4>
+<p>In this case, there is a single style</p>
+<div class="docutils container" id="id18">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-perez2011python" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">2</a><span class="fn-bracket">]</span></span>
+<p>Fernando Perez, Brian E Granger, and John D Hunter. Python: an ecosystem for scientific computing. <em>Computing in Science \&amp; Engineering</em>, 13(2):13–21, 2011.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-executable-book" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">3</a><span class="fn-bracket">]</span></span>
+<p>Executable Books Community. Jupyter book. February 2020. URL: <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">https://doi.org/10.5281/zenodo.4539666</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.4539666">doi:10.5281/zenodo.4539666</a>.</p>
+</aside>
+</aside>
+</div>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id19" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This is the footnote.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "martinschatz-cz/solar-panel-analysis",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-markdown">Standard Markdown</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-formating">Text Formating</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quotes">Quotes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lists">Lists</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#horizontal-rule">Horizontal Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#images">Images</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limited-support">Limited Support</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables">Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#block-of-code">Block of Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#math">Math</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#not-supported-in-jupyter-book">Not supported in Jupyter Book</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#strikethrough">Strikethrough</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#check-list">Check List</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#myst-specific">MyST Specific</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colored-admonitions">Colored Admonitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hidden-toggles">Hidden Toggles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropdowns">Dropdowns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dropdowns-with-admonitions">Dropdowns with Admonitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#panels">Panels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabs">Tabs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sidebars">Sidebars</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#margin-note">Margin Note</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#labels">Labels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equations">Equations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#without-label">Without Label</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#with-label">With Label</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#citation">Citation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#by-name">By Name</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography-for-names">Bibliography for Names</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#alphanumeric-sorted-by-author-year">Alphanumeric - Sorted by Author, year</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#alphanumeric-sorted-by-order-of-appearance">Alphanumeric - Sorted by order of appearance</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-sorted-by-author-year">Numeric - Sorted by Author, year</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-sorted-by-order-of-appearance">Numeric - Sorted by order of appearance</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#by-number">By Number</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliography-for-numbers">Bibliography for Numbers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Schätz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Martin Schätz.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

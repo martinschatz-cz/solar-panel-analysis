@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>📸 Quantitative Image Analysis: An Introduction &#8212; Solar Panel Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/justify.css?v=564be945" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/00_introduction';</script>
+    <script src="../_static/analytics.js?v=a5ca5447"></script>
+    <script src="../_static/analytics_gtag.js?v=9197bb07"></script>
+    <link rel="canonical" href="https://martinschatz-cz.github.io/solar-panel-analysis/chapters/00_introduction.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Datasets overview" href="01_dataset-overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Solar Panel Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    📸 Quantitative Image Analysis: An Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_dataset-overview.html">Datasets overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Detect - YOLOv8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Detect/00-YOLOv8_no_augment_qcheck-quality.html">Dataset Quality Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/01-YOLOv8_no_augment_qcheck-objects.html">Object Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/02-YOLOv8_no_augment_qcheck-training.html">YOLOv8 Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Detect/03-YOLOv8_no_augment_qcheck-validation.html">YOLOv8 Validation</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - Classic approach</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Classic/11-solar_panel_qcheck_br_morph-prep.html">Quality Check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classic/12-solar_panel_qcheck_br_morph-quality.html">Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Classic/13-solar_panel_qcheck_br_morph-clustering.html">Clustering and Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL ResNet50</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="DL/21-solar_panel_qcheck_DL-prep.html">Prepare Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DL/22-solar_panel_qcheck_DL-quality.html">Quality Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DL/23-solar_panel_qcheck_DL-training.html">DL Training</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="DL/24-solar_panel_qcheck_DL-val.html">DL Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL YOLO</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="YOLO/31-solar_panel_qcheck_DL-yolo-train.html">Data Preparation and YOLOv8 Trainig</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="YOLO/32-solar_panel_qcheck_DL-yolo-val.html">YOLOv8 Validation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis/edit/main/chapters/00_introduction.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/00_introduction.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>📸 Quantitative Image Analysis: An Introduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-considerations-per-cromey">⚖️ Ethical Considerations (Per Cromey)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cromey-s-12-points-on-digital-image-ethics">Cromey’s 12 Points on Digital Image Ethics:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-formats-and-data-integrity">💾 Image Formats and Data Integrity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-overview-quality-format-and-compression">🧐 Critical Overview: Quality, Format, and Compression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manipulation-for-human-perception">Data Manipulation for Human Perception</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-on-quantitative-analysis">Impact on Quantitative Analysis</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="quantitative-image-analysis-an-introduction">
+<h1>📸 Quantitative Image Analysis: An Introduction<a class="headerlink" href="#quantitative-image-analysis-an-introduction" title="Link to this heading">#</a></h1>
+<p>Quantitative image analysis is a field focused on <strong>extracting objective, measurable data</strong> from images. Rather than relying on subjective visual assessment, it uses computational methods and algorithms to perform tasks like counting objects, measuring areas, determining color or intensity values, and analyzing spatial relationships. This transforms visual information into <strong>numerical results</strong>, making it essential for research in biology, materials science, medicine, and engineering.</p>
+<hr class="docutils" />
+<section id="ethical-considerations-per-cromey">
+<h2>⚖️ Ethical Considerations (Per Cromey)<a class="headerlink" href="#ethical-considerations-per-cromey" title="Link to this heading">#</a></h2>
+<p>According to Douglas Cromey, ethical issues in image analysis primarily revolve around the <strong>manipulation and representation</strong> of image data. The core principle is that any image presented as quantitative data must <strong>accurately reflect the original specimen or process</strong> being studied. The image itself is a data point and must be treated with the same integrity as any other measurement.</p>
+<section id="cromey-s-12-points-on-digital-image-ethics">
+<h3>Cromey’s 12 Points on Digital Image Ethics:<a class="headerlink" href="#cromey-s-12-points-on-digital-image-ethics" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Scientific digital images are data</strong> that can be compromised by inappropriate manipulations.</p></li>
+<li><p>Manipulation of digital images should only be performed on a <strong>copy of the unprocessed image data file</strong> (Always keep the original data file safe and unchanged!).</p></li>
+<li><p><strong>Simple adjustments</strong> (e.g., brightness, contrast) to the <strong>entire image</strong> are usually acceptable.</p></li>
+<li><p><strong>Cropping</strong> an image is usually acceptable.</p></li>
+<li><p>Digital images that will be compared to one another should be acquired under identical conditions, and any <strong>post-acquisition image processing should also be identical</strong>.</p></li>
+<li><p>Manipulations that are <strong>specific to one area</strong> of an image and are not performed on other areas are questionable.</p></li>
+<li><p>Use of software filters to improve image quality is <strong>usually not recommended</strong> for biological images.</p></li>
+<li><p><strong>Cloning or copying objects</strong> into a digital image, from other parts of the same image or from a different image, is <strong>very questionable</strong>.</p></li>
+<li><p><strong>Intensity measurements</strong> should be performed on uniformly processed image data, and the data should be calibrated to a known standard.</p></li>
+<li><p><strong>Avoid the use of lossy compression.</strong></p></li>
+<li><p><strong>Magnification and resolution</strong> are important.</p></li>
+<li><p>Be careful when <strong>changing the size (in pixels)</strong> of a digital image.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="image-formats-and-data-integrity">
+<h2>💾 Image Formats and Data Integrity<a class="headerlink" href="#image-formats-and-data-integrity" title="Link to this heading">#</a></h2>
+<p>The format in which an image is saved significantly impacts its suitability for quantitative analysis.</p>
+<ul class="simple">
+<li><p><strong>Lossless Formats (e.g., TIFF, PNG):</strong> These formats preserve the original brightness values (pixel intensity) captured by the camera or scanner and are preferred for quantitative work because they do not discard or average pixel information.</p></li>
+<li><p><strong>Lossy Formats (e.g., JPEG):</strong> These formats achieve small file sizes by using <strong>compression</strong> algorithms that permanently discard some image data, making them unsuitable for quantitative analysis. The JPEG compression process relies heavily on the <strong>Discrete Cosine Transform (DCT)</strong>, which breaks the image into <strong>8x8 pixel blocks (binning)</strong>. The DCT converts the intensity data into frequency information, and the higher-frequency components (which represent fine details and rapid changes in intensity) are then <strong>quantized (effectively discarded or averaged)</strong>. This loss of high-frequency data is what allows for significant compression but also <strong>destroys the precision</strong> of the original pixel intensity values.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="critical-overview-quality-format-and-compression">
+<h2>🧐 Critical Overview: Quality, Format, and Compression<a class="headerlink" href="#critical-overview-quality-format-and-compression" title="Link to this heading">#</a></h2>
+<p>The relationship between image acquisition, format, compression, and quantitative analysis is <strong>critical and non-negotiable</strong>.</p>
+<section id="data-manipulation-for-human-perception">
+<h3>Data Manipulation for Human Perception<a class="headerlink" href="#data-manipulation-for-human-perception" title="Link to this heading">#</a></h3>
+<p>Images are often manipulated during saving to appear “nicer” for the human eye, which is a <strong>major problem</strong> for quantitative work.</p>
+<ul class="simple">
+<li><p><strong>Non-Linear Adjustments:</strong> When saving to common display formats, applications may automatically apply non-linear adjustments like <strong>gamma correction</strong> or <strong>contrast stretching</strong>. These processes alter the original relationship between the captured signal and the saved intensity value.</p></li>
+<li><p><strong>Histogram Leveling/Stretching:</strong> This practice involves modifying the image’s <strong>histogram</strong> (the distribution of brightness values) to better utilize the available range (e.g., 0-255). While this improves visual contrast, it <strong>stretches or compresses the original brightness values (or RGB channels)</strong>, meaning the saved pixel value no longer accurately represents the signal intensity captured by the sensor.</p></li>
+</ul>
+</section>
+<section id="impact-on-quantitative-analysis">
+<h3>Impact on Quantitative Analysis<a class="headerlink" href="#impact-on-quantitative-analysis" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Format Choice:</strong> Using a <strong>lossy format (like JPEG)</strong>, which averages and discards intensity data via processes like DCT binning, <strong>inherently compromises</strong> the quantitative data.</p></li>
+<li><p><strong>Quality (Acquisition &amp; Saving):</strong> Measurements are only valid if the initial acquisition is high quality and the subsequent saving maintains <strong>data fidelity</strong>. Any non-linear adjustment, histogram leveling, or <strong>gamma encoding</strong> performed without calibration or documentation makes the image invalid for measuring the original signal.</p></li>
+<li><p><strong>Conclusion:</strong> <strong>Lossless formats (TIFF, PNG)</strong> are mandatory, and any form of <strong>lossy compression</strong> or non-linear adjustment that is not fully documented and reversed must be <strong>avoided</strong> to ensure reproducible and accurate quantitative analysis.</p></li>
+</ul>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "martinschatz-cz/solar-panel-analysis",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="01_dataset-overview.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Datasets overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ethical-considerations-per-cromey">⚖️ Ethical Considerations (Per Cromey)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cromey-s-12-points-on-digital-image-ethics">Cromey’s 12 Points on Digital Image Ethics:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-formats-and-data-integrity">💾 Image Formats and Data Integrity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-overview-quality-format-and-compression">🧐 Critical Overview: Quality, Format, and Compression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-manipulation-for-human-perception">Data Manipulation for Human Perception</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-on-quantitative-analysis">Impact on Quantitative Analysis</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Schätz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Martin Schätz.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

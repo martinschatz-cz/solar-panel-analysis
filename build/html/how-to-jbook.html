@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>How to build and publish this Jupyter Book (Miniconda → gh-pages) &#8212; Solar Panel Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/justify.css?v=564be945" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'how-to-jbook';</script>
+    <script src="_static/analytics.js?v=a5ca5447"></script>
+    <script src="_static/analytics_gtag.js?v=9197bb07"></script>
+    <link rel="canonical" href="https://martinschatz-cz.github.io/solar-panel-analysis/how-to-jbook.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="chapters/00_introduction.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Solar Panel Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="chapters/00_introduction.html">
+                    📸 Quantitative Image Analysis: An Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/01_dataset-overview.html">Datasets overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Detect - YOLOv8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/Detect/00-YOLOv8_no_augment_qcheck-quality.html">Dataset Quality Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="chapters/Detect/01-YOLOv8_no_augment_qcheck-objects.html">Object Check</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="chapters/Detect/02-YOLOv8_no_augment_qcheck-training.html">YOLOv8 Training</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="chapters/Detect/03-YOLOv8_no_augment_qcheck-validation.html">YOLOv8 Validation</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - Classic approach</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/Classic/11-solar_panel_qcheck_br_morph-prep.html">Quality Check</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/Classic/12-solar_panel_qcheck_br_morph-quality.html">Feature Extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/Classic/13-solar_panel_qcheck_br_morph-clustering.html">Clustering and Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL ResNet50</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/DL/21-solar_panel_qcheck_DL-prep.html">Prepare Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/DL/22-solar_panel_qcheck_DL-quality.html">Quality Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/DL/23-solar_panel_qcheck_DL-training.html">DL Training</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="chapters/DL/24-solar_panel_qcheck_DL-val.html">DL Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyze - DL YOLO</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/YOLO/31-solar_panel_qcheck_DL-yolo-train.html">Data Preparation and YOLOv8 Trainig</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="chapters/YOLO/32-solar_panel_qcheck_DL-yolo-val.html">YOLOv8 Validation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/martinschatz-cz/solar-panel-analysis/edit/main/how-to-jbook.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/how-to-jbook.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>How to build and publish this Jupyter Book (Miniconda → gh-pages)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">1. Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-book-locally">3. Build the book locally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-publish-to-gh-pages-local">4. Manual publish to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (local)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-github-pages">6. Configure GitHub Pages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-recommendations">7. Optional recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">8. Troubleshooting</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="how-to-build-and-publish-this-jupyter-book-miniconda-gh-pages">
+<h1>How to build and publish this Jupyter Book (Miniconda → gh-pages)<a class="headerlink" href="#how-to-build-and-publish-this-jupyter-book-miniconda-gh-pages" title="Link to this heading">#</a></h1>
+<p>This document explains a step-by-step procedure to build the repository’s Jupyter Book locally using Miniconda and publish the generated static site to the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch on GitHub. It includes reproducible environment configuration, build commands (PowerShell), and an example GitHub Actions workflow that automatically builds and pushes to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>.</p>
+<p>–</p>
+<section id="assumptions">
+<h2>1. Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Repository root contains the Jupyter Book sources (<code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">chapters/</span></code>, etc.).</p></li>
+<li><p>You want static files served from the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch (Pages configured to use <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> / <code class="docutils literal notranslate"><span class="pre">/</span></code>).</p></li>
+<li><p>You have permission to push branches and edit repository Pages settings.</p></li>
+</ul>
+</section>
+<section id="create-a-reproducible-conda-environment">
+<h2>2. Create a reproducible conda environment<a class="headerlink" href="#create-a-reproducible-conda-environment" title="Link to this heading">#</a></h2>
+<p>Create <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> at the repository root. Example content:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jbook-solarp</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="err">	</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="err">	</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.10</span>
+<span class="err">	</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="err">	</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyter-book</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myst-parser</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-book-theme</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyter-cache</span>
+<span class="err">		</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nbclient</span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>Pin <code class="docutils literal notranslate"><span class="pre">python</span></code> to the minor or patch version you prefer (e.g. <code class="docutils literal notranslate"><span class="pre">python=3.10.12</span></code>) for reproducibility.</p></li>
+</ul>
+<p>On Windows PowerShell, create and activate the environment:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># From the repository root</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-f</span> <span class="n">environment</span><span class="p">.</span><span class="n">yml</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">jbook-solarp</span>
+</pre></div>
+</div>
+<p>If you prefer Miniconda installer steps, install Miniconda then run the commands above.</p>
+</section>
+<section id="build-the-book-locally">
+<h2>3. Build the book locally<a class="headerlink" href="#build-the-book-locally" title="Link to this heading">#</a></h2>
+<p>With the environment active:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Build HTML site</span>
+<span class="n">jb</span> <span class="n">build</span> <span class="p">.</span>
+
+<span class="c"># Output directory: _build/html</span>
+<span class="c"># Quick preview (Windows): opens default browser</span>
+<span class="nb">Start-Process</span> <span class="n">_build</span><span class="p">/</span><span class="n">html</span><span class="p">/</span><span class="n">index</span><span class="p">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>Important: your <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code> currently contains:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">execute</span><span class="p">:</span>
+<span class="err">	</span><span class="nt">execute_notebooks</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;off&quot;</span>
+</pre></div>
+</div>
+<p>This ensures notebooks are not re-run during <code class="docutils literal notranslate"><span class="pre">jb</span> <span class="pre">build</span></code> and that the existing saved outputs are used.</p>
+</section>
+<section id="manual-publish-to-gh-pages-local">
+<h2>4. Manual publish to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (local)<a class="headerlink" href="#manual-publish-to-gh-pages-local" title="Link to this heading">#</a></h2>
+<p>Option A — use <code class="docutils literal notranslate"><span class="pre">ghp-import</span></code> (recommended, simple):</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ghp-import</span>
+<span class="n">ghp-import</span> <span class="n">-n</span> <span class="n">-p</span> <span class="o">-f</span> <span class="n">_build</span><span class="p">/</span><span class="n">html</span> <span class="n">-b</span> <span class="n">gh-pages</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code> adds a <code class="docutils literal notranslate"><span class="pre">.nojekyll</span></code> file, <code class="docutils literal notranslate"><span class="pre">-p</span></code> pushes, <code class="docutils literal notranslate"><span class="pre">-f</span></code> forces overwrite, <code class="docutils literal notranslate"><span class="pre">-b</span></code> sets branch name.</p></li>
+</ul>
+<p>Option B — use git directly (subtree or orphan branch):</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Example: force-push _build/html as gh-pages (overwrites branch)</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="p">-</span><span class="n">-orphan</span> <span class="n">gh-pages</span>
+<span class="n">git</span> <span class="p">-</span><span class="n">-work-tree</span> <span class="n">_build</span><span class="p">/</span><span class="n">html</span> <span class="n">add</span> <span class="p">-</span><span class="n">-all</span>
+<span class="n">git</span> <span class="p">-</span><span class="n">-work-tree</span> <span class="n">_build</span><span class="p">/</span><span class="n">html</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">&quot;Publish book&quot;</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">HEAD</span><span class="p">:</span><span class="n">gh-pages</span> <span class="p">-</span><span class="n">-force</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="p">-</span>  <span class="c"># return to previous branch</span>
+</pre></div>
+</div>
+<p>After the first push, set GitHub Pages settings:</p>
+<ul class="simple">
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">Settings</span></code> → <code class="docutils literal notranslate"><span class="pre">Pages</span></code> → Source → select <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch and <code class="docutils literal notranslate"><span class="pre">/</span> <span class="pre">(root)</span></code>.</p></li>
+</ul>
+</section>
+<section id="automated-publish-via-github-actions-recommended">
+<h2>5. Automated publish via GitHub Actions (recommended)<a class="headerlink" href="#automated-publish-via-github-actions-recommended" title="Link to this heading">#</a></h2>
+<p>Create <code class="docutils literal notranslate"><span class="pre">.github/workflows/deploy-gh-pages.yml</span></code> with the following example. It uses Miniconda (conda-incubator/setup-miniconda), builds the book, then pushes to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> with <code class="docutils literal notranslate"><span class="pre">peaceiris/actions-gh-pages</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build and deploy Jupyter Book to gh-pages</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="err">	</span><span class="nt">push</span><span class="p">:</span>
+<span class="err">		</span><span class="nt">branches</span><span class="p">:</span>
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="err">	</span><span class="nt">workflow_dispatch</span><span class="p">:</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="err">	</span><span class="nt">build-and-deploy</span><span class="p">:</span>
+<span class="err">		</span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="err">		</span><span class="nt">steps</span><span class="p">:</span>
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Miniconda</span>
+<span class="err">				</span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-incubator/setup-miniconda@v2</span>
+<span class="err">				</span><span class="nt">with</span><span class="p">:</span>
+<span class="err">					</span><span class="nt">activate-environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jbook</span>
+<span class="err">					</span><span class="nt">environment-file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">environment.yml</span>
+<span class="err">					</span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.10&#39;</span>
+
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install extras via pip</span>
+<span class="err">				</span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="err">					</span><span class="l l-Scalar l-Scalar-Plain">pip install --no-cache-dir jupyter-book</span>
+
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build the book</span>
+<span class="err">				</span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="err">					</span><span class="l l-Scalar l-Scalar-Plain">jb build .</span>
+
+<span class="err">			</span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to gh-pages</span>
+<span class="err">				</span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">peaceiris/actions-gh-pages@v3</span>
+<span class="err">				</span><span class="nt">with</span><span class="p">:</span>
+<span class="err">					</span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+<span class="err">					</span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./_build/html</span>
+<span class="err">					</span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gh-pages</span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">environment-file:</span> <span class="pre">environment.yml</span></code> uses the <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> you added to create the conda environment in the runner.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">peaceiris/actions-gh-pages&#64;v3</span></code> will create or update the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch and push the site contents.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> provided by GitHub Actions has sufficient permission to push to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> for typical repository workflows.</p></li>
+</ul>
+</section>
+<section id="configure-github-pages">
+<h2>6. Configure GitHub Pages<a class="headerlink" href="#configure-github-pages" title="Link to this heading">#</a></h2>
+<p>After the workflow runs and pushes to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>:</p>
+<ul class="simple">
+<li><p>Open the repository on GitHub → <code class="docutils literal notranslate"><span class="pre">Settings</span></code> → <code class="docutils literal notranslate"><span class="pre">Pages</span></code>.</p></li>
+<li><p>Set the Source to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch and <code class="docutils literal notranslate"><span class="pre">/</span> <span class="pre">(root)</span></code> if not already set.</p></li>
+<li><p>The Pages URL will appear there once available.</p></li>
+</ul>
+</section>
+<section id="optional-recommendations">
+<h2>7. Optional recommendations<a class="headerlink" href="#optional-recommendations" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Pin exact Python patch versions in <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> and workflow (<code class="docutils literal notranslate"><span class="pre">'3.10.12'</span></code>) for determinism.</p></li>
+<li><p>If you do not want notebook outputs included, set <code class="docutils literal notranslate"><span class="pre">execute_notebooks</span></code> to <code class="docutils literal notranslate"><span class="pre">force</span></code> or <code class="docutils literal notranslate"><span class="pre">auto</span></code> depending on your desired behavior — but your current value <code class="docutils literal notranslate"><span class="pre">off</span></code> preserves notebook outputs.</p></li>
+<li><p>Consider adding a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> or a short <code class="docutils literal notranslate"><span class="pre">scripts/</span></code> helper to simplify local builds and publishing commands.</p></li>
+</ul>
+</section>
+<section id="troubleshooting">
+<h2>8. Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>If Actions fails due to permissions to push, check repository Actions permissions and branch protection rules (adjust as necessary).</p></li>
+<li><p>If build fails due to missing packages, add them to <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> (or <code class="docutils literal notranslate"><span class="pre">pip</span></code> extras) and re-run locally to test.</p></li>
+<li><p>If notebooks contain large attachments, consider cleaning outputs or using <code class="docutils literal notranslate"><span class="pre">jupyter-cache</span></code> workflows to manage caching.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "martinschatz-cz/solar-panel-analysis",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">1. Assumptions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-book-locally">3. Build the book locally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-publish-to-gh-pages-local">4. Manual publish to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (local)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-github-pages">6. Configure GitHub Pages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-recommendations">7. Optional recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">8. Troubleshooting</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin Schätz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Martin Schätz.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
