@@ -3,7 +3,7 @@ copyright: '2025, Martin Schätz'
 author: Martin Schätz
 
 execute:
-  execute_notebooks: "force"
+  execute_notebooks: "off"
 
 html:
   use_edit_page_button : true

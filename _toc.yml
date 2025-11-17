@@ -1,12 +1,33 @@
 format: jb-book
 
-root: chapters/00_how_to_use
+root: chapters/00_introduction
 
 options:
   numbered: 3
 
 parts:
-- caption: Markdown Cheat Sheet
+- caption: Introduction
   chapters:
-    - file: chapters/01_markdown
-    - file: chapters/02_jupyter
+    - file: chapters/00_introduction
+    - file: chapters/01_dataset-overview
+- caption: Detect - YOLOv8
+  chapters:
+    - file: chapters/Detect/00-YOLOv8_no_augment_qcheck-quality
+    - file: chapters/Detect/01-YOLOv8_no_augment_qcheck-objects
+    - file: chapters/Detect/02-YOLOv8_no_augment_qcheck-training
+    - file: chapters/Detect/03-YOLOv8_no_augment_qcheck-validation
+- caption: Analyze - Classic approach
+  chapters:
+    - file: chapters/Classic/11-solar_panel_qcheck_br_morph-prep
+    - file: chapters/Classic/12-solar_panel_qcheck_br_morph-quality
+    - file: chapters/Classic/13-solar_panel_qcheck_br_morph-clustering
+- caption: Analyze - DL ResNet50
+  chapters:
+    - file: chapters/DL/21-solar_panel_qcheck_DL-prep
+    - file: chapters/DL/22-solar_panel_qcheck_DL-quality
+    - file: chapters/DL/23-solar_panel_qcheck_DL-training
+    - file: chapters/DL/24-solar_panel_qcheck_DL-val
+- caption: Analyze - DL YOLO
+  chapters:
+    - file: chapters/YOLO/31-solar_panel_qcheck_DL-yolo-train
+    - file: chapters/YOLO/32-solar_panel_qcheck_DL-yolo-val
