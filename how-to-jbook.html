@@ -412,10 +412,17 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">1. Assumptions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-option-simplest-install-recommended-if-you-only-need-the-book-cli">Quick option: simplest install (recommended if you only need the book CLI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#full-environment-use-the-repository-environment-yml-reproducible">Full environment: use the repository <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> (reproducible)</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-book-locally">3. Build the book locally</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-publish-to-gh-pages-local">4. Manual publish to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (local)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repository-workflow-included-build-jbook-yml">Repository workflow included: <code class="docutils literal notranslate"><span class="pre">build-jbook.yml</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-github-pages">6. Configure GitHub Pages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-recommendations">7. Optional recommendations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">8. Troubleshooting</a></li>
@@ -471,6 +478,35 @@ document.write(`
 </pre></div>
 </div>
 <p>If you prefer Miniconda installer steps, install Miniconda then run the commands above.</p>
+<section id="quick-option-simplest-install-recommended-if-you-only-need-the-book-cli">
+<h3>Quick option: simplest install (recommended if you only need the book CLI)<a class="headerlink" href="#quick-option-simplest-install-recommended-if-you-only-need-the-book-cli" title="Link to this heading">#</a></h3>
+<p>If you only need to build the book and want the simplest setup, create a small Conda environment with Python 3.10 and install <code class="docutils literal notranslate"><span class="pre">jupyter-book==1.0.4</span></code>.</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Create a minimal environment with Python 3.10</span>
+<span class="n">conda</span> <span class="n">create</span> <span class="n">-n</span> <span class="n">jbook-solarp</span> <span class="n">python</span><span class="p">=</span><span class="n">3</span><span class="p">.</span><span class="n">10</span> <span class="n">pip</span> <span class="n">-y</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">jbook-solarp</span>
+
+<span class="c"># Install the Jupyter Book CLI (pin to 1.0.4)</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;jupyter-book==1.0.4&quot;</span>
+
+<span class="c"># Verify installation</span>
+<span class="n">jupyter-book</span> <span class="p">-</span><span class="n">-version</span>
+</pre></div>
+</div>
+<p>This is the easiest route: it installs a modern <code class="docutils literal notranslate"><span class="pre">jupyter-book</span></code> CLI on Python 3.10 and is sufficient to run <code class="docutils literal notranslate"><span class="pre">jupyter-book</span> <span class="pre">build</span> <span class="pre">.</span></code> using the notebooks and saved outputs.</p>
+</section>
+<section id="full-environment-use-the-repository-environment-yml-reproducible">
+<h3>Full environment: use the repository <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> (reproducible)<a class="headerlink" href="#full-environment-use-the-repository-environment-yml-reproducible" title="Link to this heading">#</a></h3>
+<p>The repository already includes an <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> that pins many packages (including <code class="docutils literal notranslate"><span class="pre">jupyter-book=1.0.4</span></code> and a Python 3.10.x build). To recreate that exact environment on your machine or in CI, use:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># From repo root</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">-f</span> <span class="n">environment</span><span class="p">.</span><span class="n">yml</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">jbook-solarp</span>
+
+<span class="c"># Confirm jupyter-book version (should match the pinned one)</span>
+<span class="n">jupyter-book</span> <span class="p">-</span><span class="n">-version</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> is recommended when you want the same dependency set as used for development and CI; the quick option above is faster when you only need the <code class="docutils literal notranslate"><span class="pre">jupyter-book</span></code> CLI.</p>
+</section>
 </section>
 <section id="build-the-book-locally">
 <h2>3. Build the book locally<a class="headerlink" href="#build-the-book-locally" title="Link to this heading">#</a></h2>
@@ -560,6 +596,16 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">peaceiris/actions-gh-pages&#64;v3</span></code> will create or update the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch and push the site contents.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code> provided by GitHub Actions has sufficient permission to push to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> for typical repository workflows.</p></li>
 </ul>
+<section id="repository-workflow-included-build-jbook-yml">
+<h3>Repository workflow included: <code class="docutils literal notranslate"><span class="pre">build-jbook.yml</span></code><a class="headerlink" href="#repository-workflow-included-build-jbook-yml" title="Link to this heading">#</a></h3>
+<p>This repository contains a workflow at <code class="docutils literal notranslate"><span class="pre">.github/workflows/buil-jbook.yml</span></code> that can be used as an alternative to the example above. It installs dependencies, builds the book, and deploys <code class="docutils literal notranslate"><span class="pre">_build/html</span></code> to the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch. If you use that workflow, ensure it matches your preferred install method (pip vs conda) and the build command (the workflow currently runs <code class="docutils literal notranslate"><span class="pre">jupyter-book</span> <span class="pre">build</span> <span class="pre">solar-panel-analysis</span></code>).</p>
+<p>Before enabling automated deploys, double-check these repository settings:</p>
+<ul class="simple">
+<li><p><strong>Actions workflow permissions:</strong> Go to <code class="docutils literal notranslate"><span class="pre">Settings</span></code> → <code class="docutils literal notranslate"><span class="pre">Actions</span></code> → <code class="docutils literal notranslate"><span class="pre">General</span></code> and under <strong>Workflow permissions</strong> select <strong>Allow GitHub Actions to read and write permissions</strong> (this permits workflows to push to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> using <code class="docutils literal notranslate"><span class="pre">GITHUB_TOKEN</span></code>). If this is not enabled, the deploy step may fail with permission errors.</p></li>
+<li><p><strong>GitHub Pages source:</strong> After your workflow pushes content to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>, confirm Pages is configured: <code class="docutils literal notranslate"><span class="pre">Settings</span></code> → <code class="docutils literal notranslate"><span class="pre">Pages</span></code> → Source → set the branch to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> and the folder to <code class="docutils literal notranslate"><span class="pre">/</span> <span class="pre">(root)</span></code>. If Pages is not set, the site will not be published even when the branch contains the built HTML.</p></li>
+</ul>
+<p>Also verify branch protection rules do not block the workflow from pushing to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>. If <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> is protected, either allow the Actions app or use a deploy key/service account with proper permissions.</p>
+</section>
 </section>
 <section id="configure-github-pages">
 <h2>6. Configure GitHub Pages<a class="headerlink" href="#configure-github-pages" title="Link to this heading">#</a></h2>
@@ -635,10 +681,17 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions">1. Assumptions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-reproducible-conda-environment">2. Create a reproducible conda environment</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-option-simplest-install-recommended-if-you-only-need-the-book-cli">Quick option: simplest install (recommended if you only need the book CLI)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#full-environment-use-the-repository-environment-yml-reproducible">Full environment: use the repository <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> (reproducible)</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-book-locally">3. Build the book locally</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-publish-to-gh-pages-local">4. Manual publish to <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (local)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-publish-via-github-actions-recommended">5. Automated publish via GitHub Actions (recommended)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#repository-workflow-included-build-jbook-yml">Repository workflow included: <code class="docutils literal notranslate"><span class="pre">build-jbook.yml</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configure-github-pages">6. Configure GitHub Pages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-recommendations">7. Optional recommendations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">8. Troubleshooting</a></li>

@@ -43,6 +43,39 @@ conda activate jbook-solarp
 
 If you prefer Miniconda installer steps, install Miniconda then run the commands above.
 
+### Quick option: simplest install (recommended if you only need the book CLI)
+
+If you only need to build the book and want the simplest setup, create a small Conda environment with Python 3.10 and install `jupyter-book==1.0.4`.
+
+```powershell
+# Create a minimal environment with Python 3.10
+conda create -n jbook-solarp python=3.10 pip -y
+conda activate jbook-solarp
+
+# Install the Jupyter Book CLI (pin to 1.0.4)
+pip install "jupyter-book==1.0.4"
+
+# Verify installation
+jupyter-book --version
+```
+
+This is the easiest route: it installs a modern `jupyter-book` CLI on Python 3.10 and is sufficient to run `jupyter-book build .` using the notebooks and saved outputs.
+
+### Full environment: use the repository `environment.yml` (reproducible)
+
+The repository already includes an `environment.yml` that pins many packages (including `jupyter-book=1.0.4` and a Python 3.10.x build). To recreate that exact environment on your machine or in CI, use:
+
+```powershell
+# From repo root
+conda env create -f environment.yml
+conda activate jbook-solarp
+
+# Confirm jupyter-book version (should match the pinned one)
+jupyter-book --version
+```
+
+Using `environment.yml` is recommended when you want the same dependency set as used for development and CI; the quick option above is faster when you only need the `jupyter-book` CLI.
+
 ## 3. Build the book locally
 
 With the environment active:
@@ -136,6 +169,18 @@ Notes:
 - `environment-file: environment.yml` uses the `environment.yml` you added to create the conda environment in the runner.
 - `peaceiris/actions-gh-pages@v3` will create or update the `gh-pages` branch and push the site contents.
 - `GITHUB_TOKEN` provided by GitHub Actions has sufficient permission to push to `gh-pages` for typical repository workflows.
+
+### Repository workflow included: `build-jbook.yml`
+
+This repository contains a workflow at `.github/workflows/buil-jbook.yml` that can be used as an alternative to the example above. It installs dependencies, builds the book, and deploys `_build/html` to the `gh-pages` branch. If you use that workflow, ensure it matches your preferred install method (pip vs conda) and the build command (the workflow currently runs `jupyter-book build solar-panel-analysis`).
+
+Before enabling automated deploys, double-check these repository settings:
+
+- **Actions workflow permissions:** Go to `Settings` → `Actions` → `General` and under **Workflow permissions** select **Allow GitHub Actions to read and write permissions** (this permits workflows to push to `gh-pages` using `GITHUB_TOKEN`). If this is not enabled, the deploy step may fail with permission errors.
+
+- **GitHub Pages source:** After your workflow pushes content to `gh-pages`, confirm Pages is configured: `Settings` → `Pages` → Source → set the branch to `gh-pages` and the folder to `/ (root)`. If Pages is not set, the site will not be published even when the branch contains the built HTML.
+
+Also verify branch protection rules do not block the workflow from pushing to `gh-pages`. If `gh-pages` is protected, either allow the Actions app or use a deploy key/service account with proper permissions.
 
 ## 6. Configure GitHub Pages
 
